@@ -108,7 +108,6 @@ while true; do
     "╔════════════════════════════════════════╗"
     "║         OMARCHY THEME INSTALLER        ║"
     "╚════════════════════════════════════════╝"
-    "Bro"
   )
   for line in "${BOX_LINES[@]}"; do
     padding=$(((TERM_WIDTH - ${#line}) / 2))
