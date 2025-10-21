@@ -24,6 +24,8 @@ alias ls='eza -1 --icons=auto'
 alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
 alias ld='eza -lhD --icons=auto'
 alias lt='eza --icons=auto --tree'
+alias ltt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
 alias bash='source ~/.bashrc'
 alias bfile='nvim ~/.bashrc'
 alias ffile='nvim ~/.config/fish/config.fish'
@@ -47,10 +49,8 @@ alias ac='ani-cli'
 #modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-# alias rm='trash -v'
 alias mkdir='mkdir -p'
 alias ping='ping -c 10'
-alias svi='sudo vi'
 alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
 
 # Directory navigation
@@ -69,46 +69,45 @@ alias fdh='fd --hidden'
 alias f="find . | grep "
 
 #Life Easy
+alias vim='nvim'
 alias cd='z'
 alias nd='npm run dev'
-alias open='nautilus'
+alias n='nvim'
+alias open='nautilus .'
 alias zz='yazi'
 alias lg='lazygit'
 alias x='exit'
 alias h="history | grep "
-alias dot='cd ~/dotfiles/'
 alias kt='kitten themes'
-alias g='git'
+alias g='gemini'
 alias d='docker'
+alias rip="yt-dlp -x --audio-format=\"mp3\""
+alias mp='makepkg -si'
+alias chx='chmod +x'
+alias tmuxk='tmux kill-session'
 
 # bigger font in tty and regular font in tty
-alias bigfont="setfont ter-131b"
+alias bigfont="setfont ter-132b"
 alias regfont="setfont default8x16"
 
 # Some useful aliases
 alias update='sudo pacman -Syu'
-alias pwreset='faillock --reset --user april'
+alias pwreset='faillock --reset --user vyrx'
+alias pg='ping -c 10 google.com'
 
 # Automatically do an ls after each cd, z, or zoxide
 alias cleanup='sudo pacman -Rns $(pacman -Qdtq)'
-alias showpkg='pacman -Qi'                                                               # Show package info
+alias showpkg='pacman -Qi' # Show package info
 alias mirrorfix='sudo reflector --latest 20 --sort rate --save /etc/pacman.d/mirrorlist' # Fix mirrors
-alias pacclean='sudo paccache -r'                                                        # Clean all but latest 3 versions
-alias paccleanall='sudo paccache -r -c /var/cache/pacman/pkg -u'                         # Clean all cached packages
-alias pacckeep='sudo paccache -k 3'                                                      # Keep latest 3 versions, remove rest
+alias pacclean='sudo paccache -r' # Clean all but latest 3 versions
+alias paccleanall='sudo paccache -r -c /var/cache/pacman/pkg -u' # Clean all cached packages
+alias pacckeep='sudo paccache -k 3' # Keep latest 3 versions, remove rest
 alias cleanc='sudo pacman -Sc && yay -Sc'
 alias folders='du -h --max-depth=1'
 
 # Git aliases
 alias gits='git status'
-alias ga='git add .'
-alias gc='git commit -m'
-alias gp='git push'
-alias gl='git pull'
-alias gco='git checkout'
-alias gb='git branch'
-alias gd='git diff'
-alias ghs='streaker theamit-969'
+alias ghs='streaker vyrx-dev'
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
