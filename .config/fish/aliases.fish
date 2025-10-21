@@ -55,6 +55,7 @@ alias fdh='fd --hidden'
 alias f="find . | grep "
 
 #Life Easy
+alias vim='nvim'
 alias cd='z'
 alias nd='npm run dev'
 alias n='nvim'

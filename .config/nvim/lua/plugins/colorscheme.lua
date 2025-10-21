@@ -1,4 +1,3 @@
--- NOTE:
 -- lazy = false, -- make sure we load this during startup if it is your main colorscheme
 -- priority = 1000, -- make sure to load this before all the other plugins
 return {
@@ -71,10 +70,18 @@ return {
       transparent = true,
     },
   },
+  -- Pixel
   {
     "bjarneo/pixel.nvim",
     lazy = true,
     priority = 1000,
+  },
+  -- void
+  {
+    "vyrx-dev/void.nvim",
+    lazy = true,
+    priority = 1000,
+    opts = {},
   },
   -- Set the active theme
   {
@@ -84,13 +91,3 @@ return {
     },
   },
 }
-
--- return {
---   { "vyrx-dev/void.nvim", lazy = false, priority = 1000 },
---   {
---     "LazyVim/LazyVim",
---     opts = {
---       colorscheme = "void",
---     },
---   },
--- }
