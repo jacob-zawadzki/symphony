@@ -1,11 +1,8 @@
-add_newline = true
+add_newline = false
 command_timeout = 60
-# palette = "gruvbox_material"
 format = """\
 $os \
-$directory\
-$golang\
-$nodejs\
+$directory \
 $git_branch$git_status\
 $line_break\
 $character\
@@ -14,10 +11,6 @@ $character\
 # right_format = """\
 # $time\
 # """
-
-[directory.substitutions]
-'~/100xCodes/Cohort-3-WebDev' = 'Learning'
-'~/Testing-repo' = 'work-project'
 
 palette = "colors"
 
@@ -33,21 +26,26 @@ color7 = '{{colors.surface.default.hex}}'
 color8 = '{{colors.primary.default.hex}}'
 color9 = '{{colors.tertiary.default.hex}}'
 
-[character]
-success_symbol = '[❯](color9 bold)'         # mustard
-error_symbol = '[❯](@{error})' # color9
-vicmd_symbol = '[❮](#f9e2af))'  # color8
-
 [directory]
 style = "fg:{{colors.primary_fixed_dim.default.hex}} bold" # color1
 read_only = " 󰌾"
+read_only_style = "fg:#ea6962" # dark blue
 truncation_length = 0
 truncate_to_repo = false
-format = "[$path]($style)[$read_only ]($read_only_style)"
+format = "[$path]($style)[$read_only]($read_only_style)"
+
+[directory.substitutions]
+'~/100xCodes/Cohort-3-WebDev' = 'Learning'
+'~/Testing-repo' = 'work-project'
+
+[character]
+success_symbol = '[❯](fg:{{colors.primary.default.hex}} bold)'
+error_symbol = '[❯](fg:{{colors.error.default.hex}} bold)'
+vicmd_symbol = '[❮](fg:{{colors.surface_dim.default.hex}} bold)'
 
 [git_branch]
 style = "fg:{{colors.tertiary.default.hex}} bold" # color9 (red)
-format = '[ $symbol$branch]($style) '
+format = '[$symbol$branch]($style) '
 
 [git_status]
 ahead = '⇡${count}'
@@ -55,7 +53,6 @@ behind = '⇣${count}'
 diverged = '⇕⇡${ahead_count}⇣${behind_count}'
 format = '[[($all_status$ahead_behind )](fg:#ea6962)]($style)'
 # style = "bg:#394260"
-#
 
 [os]
 format = "[$symbol]($style)"
@@ -63,20 +60,9 @@ style = "fg:{{colors.primary.default.hex}} bold" # color8
 disabled = false
 
 [os.symbols]
+Linux = "󰊠 "
 Arch = "󰣇"
-Linux = "󰊠"
 Ubuntu = "󰕈"
-
-[golang]
-format = "[$symbol]($style)"
-style = "fg:{{colors.surface_container.default.hex}} bold"
-symbol = ""
-
-[nodejs]
-format = "[$symbol]($style)"
-style = "fg:{{colors.on_surface_variant.default.hex}} bold"
-symbol = "󰎙 "
-
 
 # [time]
 # disabled = false
