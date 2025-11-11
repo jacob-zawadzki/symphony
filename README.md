@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banner](Assests/banner.jpg)
+![Banner](assets/banner.jpg)
 
 # Hyprland Dotfiles
 
@@ -14,7 +14,7 @@
 
 <https://github.com/vyrx-dev/dotfiles/assets/showcase.mp4>
 
-![Desktop Showcase](Assests/Desktop.png)
+![Desktop Showcase](assets/Desktop.png)
 
 </div>
 
@@ -35,25 +35,25 @@
 <details>
 <summary><b>Rofi Menus</b></summary>
 
-![Rofi](Assests/rofi.png)
+![Rofi](assets/rofi.png)
 
 <https://github.com/vyrx-dev/dotfiles/assets/rofi.mp4>
 
 ### Emoji Picker
 
-![Emoji Picker](Assests/emoji.png)
+![Emoji Picker](assets/emoji.png)
 
 ### Clipboard Manager
 
-![Clipboard](Assests/clipboard.png)
+![Clipboard](assets/clipboard.png)
 
 ### Wallpaper Selector
 
-![Wallpaper Selector](Assests/wallpaper-selector.png)
+![Wallpaper Selector](assets/wallpaper-selector.png)
 
 ### Power Profile Manager
 
-![Power Profile](Assests/powerprofile.png)
+![Power Profile](assets/powerprofile.png)
 
 </details>
 
@@ -67,39 +67,39 @@
 <details>
 <summary><b>Notification Center (Swaync)</b></summary>
 
-![Swaync 1](Assests/swaync-1.png)
-![Swaync 2](Assests/swaync-2.png)
-![Swaync 3](Assests/swaync-3.png)
+![Swaync 1](assets/swaync-1.png)
+![Swaync 2](assets/swaync-2.png)
+![Swaync 3](assets/swaync-3.png)
 
 </details>
 
 <details>
 <summary><b>Neovim & Tmux</b></summary>
 
-![Neovim Dashboard](Assests/neovim_dashboard.png)
-![Neovim 1](Assests/Neovim-1.png)
-![Neovim 2](Assests/Neovim-2.png)
+![Neovim Dashboard](assets/neovim_dashboard.png)
+![Neovim 1](assets/Neovim-1.png)
+![Neovim 2](assets/Neovim-2.png)
 
 </details>
 
 <details>
 <summary><b>Music (RMPC)</b></summary>
 
-![RMPC](Assests/rmpc.png)
+![RMPC](assets/rmpc.png)
 
 </details>
 
 <details>
 <summary><b>Wlogout</b></summary>
 
-![Wlogout](Assests/wlogout.png)
+![Wlogout](assets/wlogout.png)
 
 </details>
 
 <details>
 <summary><b>Hyprlock</b></summary>
 
-![Hyprlock](Assests/hyprlock.png)
+![Hyprlock](assets/hyprlock.png)
 
 </details>
 
