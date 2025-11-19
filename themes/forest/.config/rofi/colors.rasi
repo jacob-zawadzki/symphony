@@ -1,0 +1,39 @@
+* {
+    /* Primary accent color (soft forest green) */
+    primary: #4a7a4a;
+    primary-container: #3a5a3a;
+    on-primary: #020802;
+    on-primary-container: #fdfffd;
+    
+    /* Secondary accent (muted jade) */
+    secondary: #62e2a4;
+    secondary-container: #0a150a;
+    on-secondary: #020802;
+    on-secondary-container: #fdfffd;
+    
+    /* Surface backgrounds - forest theme */
+    surface: #020802;
+    surface-dim: #020802;
+    surface-bright: #0a150a;
+    surface-container-lowest: #020802;
+    surface-container-low: #020802;
+    surface-container: #0a150a;
+    surface-container-high: #1a2820;
+    surface-container-highest: #bff2ab;
+    
+    /* Text colors */
+    on-surface: #bff2ab;
+    on-surface-variant: #9ed8dd;
+    
+    /* Outline/border colors */
+    outline: #0a150a;
+    outline-variant: #1a2820;
+    
+    /* Error colors */
+    error: #bf5a7c;
+    on-error: #020802;
+    
+    /* Inverse colors */
+    inverse-surface: #bff2ab;
+    inverse-on-surface: #020802;
+}

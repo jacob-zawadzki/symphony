@@ -1,0 +1,39 @@
+* {
+    /* Primary accent color - muted tan/caramel */
+    primary: #cea37f;
+    primary-container: #3a3330;
+    on-primary: #0f0f0f;
+    on-primary-container: #eadccc;
+    
+    /* Secondary accent - subtle warm gray */
+    secondary: #706a6a;
+    secondary-container: #252220;
+    on-secondary: #0f0f0f;
+    on-secondary-container: #e6caab;
+    
+    /* Surface backgrounds - very dark progression with warm undertones */
+    surface: #0f0f0f;
+    surface-dim: #0a0a0a;
+    surface-bright: #1a1816;
+    surface-container-lowest: #0a0a0a;
+    surface-container-low: #0f0f0f;
+    surface-container: #1a1816;
+    surface-container-high: #252220;
+    surface-container-highest: #3a3330;
+    
+    /* Text colors - warm cream tones */
+    on-surface: #eadccc;
+    on-surface-variant: #cea37f;
+    
+    /* Outline/border colors - very subtle dark warm tones */
+    outline: #3a3330;
+    outline-variant: #252220;
+    
+    /* Error colors - muted red */
+    error: #e25d6c;
+    on-error: #0f0f0f;
+    
+    /* Inverse colors */
+    inverse-surface: #eadccc;
+    inverse-on-surface: #0f0f0f;
+}

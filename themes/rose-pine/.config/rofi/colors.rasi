@@ -1,0 +1,39 @@
+* {
+    /* Primary accent color (cyan/blue) */
+    primary: #ebbcba;
+    primary-container: #31748f;
+    on-primary: #0f0e16;
+    on-primary-container: #e0def4;
+    
+    /* Secondary accent (magenta) */
+    secondary: #c4a7e7;
+    secondary-container: #26233a;
+    on-secondary: #0f0e16;
+    on-secondary-container: #e0def4;
+    
+    /* Surface backgrounds - using bg and gray for depth */
+    surface: #0f0e16;
+    surface-dim: #0f0e16;
+    surface-bright: #26233a;
+    surface-container-lowest: #0f0e16;
+    surface-container-low: #0f0e16;
+    surface-container: #26233a;
+    surface-container-high: #26233a;
+    surface-container-highest: #e0def4;
+    
+    /* Text colors */
+    on-surface: #e0def4;
+    on-surface-variant: #e0def4;
+    
+    /* Outline/border colors */
+    outline: #26233a;
+    outline-variant: #26233a;
+    
+    /* Error colors */
+    error: #eb6f92;
+    on-error: #0f0e16;
+    
+    /* Inverse colors */
+    inverse-surface: #e0def4;
+    inverse-on-surface: #0f0e16;
+}

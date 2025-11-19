@@ -1,0 +1,27 @@
+{
+  "wallpaper": "/home/vyrx/dotfiles/themes/monochrome/backgrounds/wallpaper",
+  "alpha": "100",
+  "special": {
+    "background": "#000000",
+    "foreground": "#e6e6e6",
+    "cursor": "#e6e6e6"
+  },
+  "colors": {
+    "color0": "#000000",
+    "color1": "#666666",
+    "color2": "#757575",
+    "color3": "#8a8a8a",
+    "color4": "#545454",
+    "color5": "#606060",
+    "color6": "#707070",
+    "color7": "#a0a0a0",
+    "color8": "#424242",
+    "color9": "#666666",
+    "color10": "#757575",
+    "color11": "#8a8a8a",
+    "color12": "#545454",
+    "color13": "#606060",
+    "color14": "#707070",
+    "color15": "#e6e6e6"
+  }
+}

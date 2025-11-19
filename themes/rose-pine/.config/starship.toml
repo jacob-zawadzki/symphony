@@ -1,0 +1,74 @@
+add_newline = false
+command_timeout = 60
+format = """\
+$os \
+$directory \
+$git_branch$git_status\
+$line_break\
+$character\
+"""
+
+# right_format = """\
+# $time\
+# """
+
+palette = "colors"
+
+[palettes.colors]
+mustard = '#af8700' # example
+color1 = '#a0cafd'
+color2 = '#003257'
+color3 = '#c3c7cf'
+color4 = '#1d2024'
+color5 = '#003257'
+color6 = '#101418'
+color7 = '#101418'
+color8 = '#a0cafd'
+color9 = '#d6bee5'
+
+[directory]
+style = "fg:#a0cafd bold" # color1
+read_only = " 󰌾"
+read_only_style = "fg:#ea6962" # dark blue
+truncation_length = 0
+truncate_to_repo = false
+format = "[$path]($style)[$read_only]($read_only_style)"
+
+[directory.substitutions]
+'~/100xCodes/Cohort-3-WebDev' = 'Learning'
+'~/Testing-repo' = 'work-project'
+
+[character]
+success_symbol = '[❯](fg:#a0cafd bold)'
+error_symbol = '[❯](fg:#ffb4ab bold)'
+vicmd_symbol = '[❮](fg:#101418 bold)'
+
+[git_branch]
+style = "fg:#d6bee5 bold" # color9 (red)
+format = '[$symbol$branch]($style) '
+
+[git_status]
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+format = '[[($all_status$ahead_behind )](fg:#ea6962)]($style)'
+# style = "bg:#394260"
+
+[os]
+format = "[$symbol]($style)"
+style = "fg:#a0cafd bold" # color8
+disabled = false
+
+[os.symbols]
+Linux = "󰊠 "
+Arch = "󰣇"
+Ubuntu = "󰕈"
+
+# [time]
+# disabled = false
+# format = '[[ $time ](fg:#ea6962 )]($style)'
+# time_format = "%R"
+
+[line_break]
+disabled = true
+

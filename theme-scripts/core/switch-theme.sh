@@ -59,120 +59,108 @@ if [ "$SELECTED" = "matugen" ] || [ -d "$THEMES_DIR/$SELECTED" ]; then
   # Save current theme name
   echo "$SELECTED" > "$HOME/.config/symphony/.current-theme"
   
-  # Manually symlink rofi colors (since main rofi config is not in themes)
-  if [ "$SELECTED" = "matugen" ]; then
-    # Remove symlink for matugen - it writes directly to this file
-    rm -f "$HOME/.config/rofi/colors.rasi"
-  elif [ -f "$THEMES_DIR/$SELECTED/.config/rofi/colors.rasi" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/rofi/colors.rasi" "$HOME/.config/rofi/colors.rasi"
+  # Symlink app configs to symphony/current (single source of truth)
+  # This way we only update symphony/current when switching themes
+  
+  # Rofi colors
+  if [ -f "$SYMPHONY_CURRENT/.config/rofi/colors.rasi" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/rofi/colors.rasi" "$HOME/.config/rofi/colors.rasi"
   fi
   
-  # Manually symlink starship config for non-matugen themes
-  if [ "$SELECTED" != "matugen" ] && [ -f "$THEMES_DIR/$SELECTED/.config/starship.toml" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/starship.toml" "$HOME/.config/starship.toml"
+  # Starship config
+  if [ -f "$SYMPHONY_CURRENT/.config/starship.toml" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/starship.toml" "$HOME/.config/starship.toml"
   fi
   
-  # Manually symlink hyprland theme files (since main hyprland.conf is not in themes)
+  # Hyprland theme files
   mkdir -p "$HOME/.config/hypr/theme"
-  if [ -f "$THEMES_DIR/$SELECTED/.config/hypr/theme/colors.conf" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/hypr/theme/colors.conf" "$HOME/.config/hypr/theme/colors.conf"
+  if [ -f "$SYMPHONY_CURRENT/.config/hypr/theme/colors.conf" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/hypr/theme/colors.conf" "$HOME/.config/hypr/theme/colors.conf"
   fi
-  if [ -f "$THEMES_DIR/$SELECTED/.config/hypr/theme/overrides.conf" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/hypr/theme/overrides.conf" "$HOME/.config/hypr/theme/overrides.conf"
-  fi
-  
-  # Manually symlink kitty theme files
-  if [ -f "$THEMES_DIR/$SELECTED/.config/kitty/colors.conf" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/kitty/colors.conf" "$HOME/.config/kitty/colors.conf"
-  fi
-  if [ -f "$THEMES_DIR/$SELECTED/.config/kitty/overrides.conf" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/kitty/overrides.conf" "$HOME/.config/kitty/overrides.conf"
+  if [ -f "$SYMPHONY_CURRENT/.config/hypr/theme/overrides.conf" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/hypr/theme/overrides.conf" "$HOME/.config/hypr/theme/overrides.conf"
   fi
   
-  # Manually symlink alacritty theme files
-  if [ -f "$THEMES_DIR/$SELECTED/.config/alacritty/colors.toml" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/alacritty/colors.toml" "$HOME/.config/alacritty/colors.toml"
+  # Kitty theme files
+  if [ -f "$SYMPHONY_CURRENT/.config/kitty/colors.conf" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/kitty/colors.conf" "$HOME/.config/kitty/colors.conf"
   fi
-  if [ -f "$THEMES_DIR/$SELECTED/.config/alacritty/overrides.toml" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/alacritty/overrides.toml" "$HOME/.config/alacritty/overrides.toml"
+  if [ -f "$SYMPHONY_CURRENT/.config/kitty/overrides.conf" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/kitty/overrides.conf" "$HOME/.config/kitty/overrides.conf"
   fi
   
-  # Manually symlink ghostty theme files
+  # Alacritty theme files
+  if [ -f "$SYMPHONY_CURRENT/.config/alacritty/colors.toml" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/alacritty/colors.toml" "$HOME/.config/alacritty/colors.toml"
+  fi
+  if [ -f "$SYMPHONY_CURRENT/.config/alacritty/overrides.toml" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/alacritty/overrides.toml" "$HOME/.config/alacritty/overrides.toml"
+  fi
+  
+  # Ghostty theme files
   mkdir -p "$HOME/.config/ghostty/themes"
-  if [ "$SELECTED" = "matugen" ]; then
+  if [ -f "$SYMPHONY_CURRENT/.config/ghostty/themes/colors" ]; then
     # Matugen uses themes/colors path
-    if [ -f "$THEMES_DIR/$SELECTED/.config/ghostty/themes/colors" ]; then
-      ln -sf "$THEMES_DIR/$SELECTED/.config/ghostty/themes/colors" "$HOME/.config/ghostty/themes/colors"
-    fi
-  else
+    ln -sf "$SYMPHONY_CURRENT/.config/ghostty/themes/colors" "$HOME/.config/ghostty/themes/colors"
+  elif [ -f "$SYMPHONY_CURRENT/.config/ghostty/theme" ]; then
     # Static themes use theme file (needs to be linked to themes/colors)
-    if [ -f "$THEMES_DIR/$SELECTED/.config/ghostty/theme" ]; then
-      ln -sf "$THEMES_DIR/$SELECTED/.config/ghostty/theme" "$HOME/.config/ghostty/themes/colors"
-    fi
+    ln -sf "$SYMPHONY_CURRENT/.config/ghostty/theme" "$HOME/.config/ghostty/themes/colors"
   fi
   
-  # Manually symlink btop theme file
+  # Btop theme file
   mkdir -p "$HOME/.config/btop/themes"
-  if [ -f "$THEMES_DIR/$SELECTED/.config/btop/themes/current.theme" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/btop/themes/current.theme" "$HOME/.config/btop/themes/current.theme"
+  if [ -f "$SYMPHONY_CURRENT/.config/btop/themes/current.theme" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/btop/themes/current.theme" "$HOME/.config/btop/themes/current.theme"
   fi
   
   # Update cava colors directly in config
-  if [ -f "$THEMES_DIR/$SELECTED/.config/cava" ]; then
+  if [ -f "$SYMPHONY_CURRENT/.config/cava/colors.ini" ] || [ -f "$SYMPHONY_CURRENT/.config/cava" ]; then
     "$HOME/dotfiles/theme-scripts/core/update-cava-colors.sh" "$SELECTED" >/dev/null 2>&1
   fi
   
   # Update rmpc theme
-  if [ -f "$THEMES_DIR/$SELECTED/.config/rmpc/themes/theme.ron" ] || [ "$SELECTED" = "matugen" ]; then
+  if [ -f "$SYMPHONY_CURRENT/.config/rmpc/themes/theme.ron" ] || [ -f "$SYMPHONY_CURRENT/.config/rmpc/themes/current.ron" ]; then
     "$HOME/dotfiles/theme-scripts/core/update-rmpc-theme.sh" "$SELECTED" >/dev/null 2>&1
   fi
   
   # Update Obsidian theme for all vaults
   bash "$HOME/dotfiles/theme-scripts/core/update-obsidian-theme.sh" >/dev/null 2>&1
   
-  # Manually symlink waybar colors (if using waybar)
-  if [ -f "$THEMES_DIR/$SELECTED/.config/waybar/colors.css" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/waybar/colors.css" "$HOME/.config/waybar/colors.css"
+  # Waybar colors
+  if [ -f "$SYMPHONY_CURRENT/.config/waybar/colors.css" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/waybar/colors.css" "$HOME/.config/waybar/colors.css"
   fi
   
-  # Manually symlink vesktop theme file
+  # Vesktop theme file
   mkdir -p "$HOME/.config/vesktop/themes"
-  if [ -f "$THEMES_DIR/$SELECTED/.config/vesktop/themes/midnight-discord.css" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/vesktop/themes/midnight-discord.css" "$HOME/.config/vesktop/themes/midnight-discord.css"
+  if [ -f "$SYMPHONY_CURRENT/.config/vesktop/themes/midnight-discord.css" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/vesktop/themes/midnight-discord.css" "$HOME/.config/vesktop/themes/midnight-discord.css"
   fi
   
-  # Manually symlink GTK colors for theme-specific coloring
-  if [ "$SELECTED" = "matugen" ]; then
-    # Remove symlinks for matugen - it writes directly to these files
-    rm -f "$HOME/.config/gtk-3.0/colors.css"
-    rm -f "$HOME/.config/gtk-4.0/colors.css"
-  else
-    ln -sf "$THEMES_DIR/$SELECTED/.config/gtk-3.0/colors.css" "$HOME/.config/gtk-3.0/colors.css"
-    ln -sf "$THEMES_DIR/$SELECTED/.config/gtk-4.0/colors.css" "$HOME/.config/gtk-4.0/colors.css"
+  # GTK colors
+  if [ -f "$SYMPHONY_CURRENT/.config/gtk-3.0/colors.css" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/gtk-3.0/colors.css" "$HOME/.config/gtk-3.0/colors.css"
+  fi
+  if [ -f "$SYMPHONY_CURRENT/.config/gtk-4.0/colors.css" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/gtk-4.0/colors.css" "$HOME/.config/gtk-4.0/colors.css"
   fi
   
-  # Manually symlink pywal colors for Firefox pywalfox integration
+  # Pywal colors for Firefox pywalfox integration
   mkdir -p "$HOME/.cache/wal"
-  if [ "$SELECTED" = "matugen" ]; then
-    # Remove symlink for matugen - it writes directly to this file
-    rm -f "$HOME/.cache/wal/colors.json"
-  elif [ -f "$THEMES_DIR/$SELECTED/.cache/wal/colors.json" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.cache/wal/colors.json" "$HOME/.cache/wal/colors.json"
+  if [ -f "$SYMPHONY_CURRENT/.cache/wal/colors.json" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.cache/wal/colors.json" "$HOME/.cache/wal/colors.json"
   fi
   
-  # Manually symlink yazi theme
-  if [ -f "$THEMES_DIR/$SELECTED/.config/yazi/theme.toml" ]; then
-    ln -sf "$THEMES_DIR/$SELECTED/.config/yazi/theme.toml" "$HOME/.config/yazi/theme.toml"
-  elif [ "$SELECTED" = "matugen" ]; then
-    # Matugen handles yazi theme directly via its config
-    :
+  # Yazi theme
+  if [ -f "$SYMPHONY_CURRENT/.config/yazi/theme.toml" ]; then
+    ln -sf "$SYMPHONY_CURRENT/.config/yazi/theme.toml" "$HOME/.config/yazi/theme.toml"
   fi
   
-  # Manually copy neovim theme for hot-reload (copy instead of symlink so LazyVim detects changes)
-  if [ -f "$THEMES_DIR/$SELECTED/.config/nvim/theme.lua" ]; then
-    cp "$THEMES_DIR/$SELECTED/.config/nvim/theme.lua" "$HOME/.config/nvim/lua/plugins/theme-current.lua"
-  elif [ "$SELECTED" = "matugen" ]; then
-    # Remove file for matugen (uses default colorscheme.lua)
+  # Copy neovim theme for hot-reload (copy instead of symlink so LazyVim detects changes)
+  if [ -f "$SYMPHONY_CURRENT/.config/nvim/theme.lua" ]; then
+    cp "$SYMPHONY_CURRENT/.config/nvim/theme.lua" "$HOME/.config/nvim/lua/plugins/theme-current.lua"
+  else
+    # Remove file if theme doesn't have nvim theme (uses default colorscheme.lua)
     rm -f "$HOME/.config/nvim/lua/plugins/theme-current.lua"
   fi
   

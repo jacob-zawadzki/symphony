@@ -1,0 +1,27 @@
+{
+  "wallpaper": "/home/vyrx/dotfiles/themes/sakura/backgrounds/1.jpg",
+  "alpha": "100",
+  "special": {
+    "background": "#080305",
+    "foreground": "#d6cfd3",
+    "cursor": "#c9ab8f"
+  },
+  "colors": {
+    "color0": "#080305",
+    "color1": "#ce4a59",
+    "color2": "#d8807f",
+    "color3": "#ba8d6b",
+    "color4": "#bf8a56",
+    "color5": "#b79880",
+    "color6": "#cea680",
+    "color7": "#d6cfd3",
+    "color8": "#3a2d34",
+    "color9": "#e56070",
+    "color10": "#e59c9b",
+    "color11": "#cc9f79",
+    "color12": "#d19e64",
+    "color13": "#c9ab8f",
+    "color14": "#e1b891",
+    "color15": "#e6e6e6"
+  }
+}

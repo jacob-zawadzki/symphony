@@ -1,0 +1,29 @@
+{
+    "checksum": "ff9144c48241917e92b80105d7cabe81",
+    "wallpaper": "/home/vyrx/Wallpapers/a_cartoon_of_a_whale_flying_over_a_road.jpg",
+    "alpha": "100",
+
+    "special": {
+        "background": "#1b160b",
+        "foreground": "#c6c4c2",
+        "cursor": "#c6c4c2"
+    },
+    "colors": {
+        "color0": "#1b160b",
+        "color1": "#E16A37",
+        "color2": "#986151",
+        "color3": "#DD764B",
+        "color4": "#FC8F35",
+        "color5": "#E5985C",
+        "color6": "#D3B659",
+        "color7": "#c6c4c2",
+        "color8": "#6f695a",
+        "color9": "#E16A37",
+        "color10": "#986151",
+        "color11": "#DD764B",
+        "color12": "#FC8F35",
+        "color13": "#E5985C",
+        "color14": "#D3B659",
+        "color15": "#c6c4c2"
+    }
+}
