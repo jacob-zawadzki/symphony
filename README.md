@@ -1,10 +1,20 @@
 <div align="center">
-  
-<img src="assets/banner.jpg" alt="Symphony" width="100%" height="300" style="object-fit: cover; object-position: center;">
+<!---->
+<!-- <img src="assets/banner.jpg" alt="Symphony" width="100%" height="300" style="object-fit: cover; object-position: center;"> -->
+<!---->
+<!-- >*My daily driver setup — simple, calm and easy to work with. -->
+<!-- Minimal by default, but still has a bit of character. -->
+<!-- Animations, gaps, and extras can be toggled on/off, so you can choose between clean or pretty.* -->
+<!---->
+<!-- --- -->
 
->*My daily driver setup — simple, calm and easy to work with.
-Minimal by default, but still has a bit of character.
-Animations, gaps, and extras can be toggled on/off, so you can choose between clean or pretty.*
+### 🎵 Symphony 2.0 - Coming Soon
+
+Want to help make it happen faster? Contribute to the project!
+• [Check the TODO](TODO.md)
+• [Create an issue](https://github.com/vyrx-dev/dotfiles/issues) if you spot any problems
+
+---
 
 </div>
 
@@ -309,19 +319,6 @@ stow -D .
 ├── matugen/        # Theme generator
 └── starship.toml   # Shell prompt
 ```
-
----
-
-## TODO
-
-- [ ] **Full installation script** — Automated setup for dependencies and configuration
-- [ ] **Matugen integration for RMPC** — Dynamic theming for music player
-- [ ] **Matugen integration for Rofi** — Dynamic theming (keeping current theme as fallback)
-- [ ] **Neovim cleanup** — Remove unused plugins and optimize configuration
-- [ ] **Media conversion scripts** — Video and image conversion utilities
-- [ ] **Fish shell abbreviations** — Convert aliases to proper abbreviations
-- [ ] **Theme Switcher** — Implement dynamic theme switching interface
-- [ ] **Spicetify Pywal integration** — Add Spotify theming support
 
 ---
 
