@@ -18,33 +18,34 @@
 
 - [ ] Spicetify
 - [ ] Rofi
-- [ ] RMPC
+- [x] RMPC
 - [ ] Yazi
-- [ ] Btop
+- [x] Btop
 - [ ] Starship
-- [ ] GTK
+- [x] GTK
 - [ ] SwayNC
-- [ ] Cava
+- [x] Cava
 - [ ] Hypr borders
 - [x] Waybar
 
 **Terminals**
 
-- [ ] Kitty
-- [ ] Ghostty
+- [x] Kitty
+- [x] Ghostty
 - [ ] Alacritty
 
 **Secondary**
 
-- [ ] Firefox
-- [ ] Vesktop
-- [ ] Obsidian
+- [x] Firefox
+- [x] Vesktop
+- [x] Obsidian
 
 ---
 
 ## 🔧 Scripts & Tools
 
-- [ ] Theme switcher (fish aliases → abbr)
+- [x] Theme switcher 
+- [ ] fish aliases → abbr
 - [ ] Media conversion scripts
 - [ ] Theme installer script
 - [ ] Full installation script
