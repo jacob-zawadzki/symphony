@@ -1,3 +1,7 @@
+-- Symphony by vyrx
+-- Theme: Rose Pine
+-- https://github.com/vyrx-dev
+
 return {
 	{
 		"rose-pine/neovim",
