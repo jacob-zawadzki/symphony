@@ -19,21 +19,20 @@ $character\
 palette = "colors"
 
 [palettes.colors]
-mustard = '#af8700' # example
-color1 = '#81d3de'
-color2 = '#00363b'
-color3 = '#bec8ca'
-color4 = '#1a2121'
-color5 = '#00363b'
-color6 = '#0e1415'
-color7 = '#0e1415'
-color8 = '#81d3de'
-color9 = '#b8c6ea'
+color1 = '#E8C099'
+color2 = '#4a3c45'
+color3 = '#f0eaed'
+color4 = '#0d0509'
+color5 = '#4a3c45'
+color6 = '#0d0509'
+color7 = '#0d0509'
+color8 = '#E8C099'
+color9 = '#D1B399'
 
 [directory]
-style = "fg:#81d3de bold" # color1
+style = "fg:color1 bold"
 read_only = " 󰌾"
-read_only_style = "fg:#ea6962" # dark blue
+read_only_style = "fg:#E85F6F"
 truncation_length = 0
 truncate_to_repo = false
 format = "[$path]($style)[$read_only]($read_only_style)"
@@ -43,24 +42,24 @@ format = "[$path]($style)[$read_only]($read_only_style)"
 '~/Testing-repo' = 'work-project'
 
 [character]
-success_symbol = '[❯](fg:#81d3de bold)'
-error_symbol = '[❯](fg:#ffb4ab bold)'
-vicmd_symbol = '[❮](fg:#0e1415 bold)'
+success_symbol = '[❯](fg:color8 bold)'
+error_symbol = '[❯](fg:#E85F6F bold)'
+vicmd_symbol = '[❮](fg:color6 bold)'
 
 [git_branch]
-style = "fg:#b8c6ea bold" # color9 (red)
+style = "fg:color9 bold"
 format = '[$symbol$branch]($style) '
 
 [git_status]
 ahead = '⇡${count}'
 behind = '⇣${count}'
 diverged = '⇕⇡${ahead_count}⇣${behind_count}'
-format = '[[($all_status$ahead_behind )](fg:#ea6962)]($style)'
+format = '[[($all_status$ahead_behind )](fg:#E85F6F)]($style)'
 # style = "bg:#394260"
 
 [os]
 format = "[$symbol]($style)"
-style = "fg:#81d3de bold" # color8
+style = "fg:color8 bold"
 disabled = false
 
 [os.symbols]
@@ -70,7 +69,7 @@ Ubuntu = "󰕈"
 
 # [time]
 # disabled = false
-# format = '[[ $time ](fg:#ea6962 )]($style)'
+# format = '[[ $time ](fg:#E85F6F )]($style)'
 # time_format = "%R"
 
 [line_break]
