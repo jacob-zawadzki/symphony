@@ -1,0 +1,27 @@
+#!/bin/bash
+
+THEME=$(cat ~/.current-theme)
+WALLDIR="$HOME/dotfiles/themes/$THEME/backgrounds"
+
+[ ! -d "$WALLDIR" ] && exit 1
+
+WALLS=($(cd "$WALLDIR" && ls *.{jpg,png,jpeg} 2>/dev/null | sort))
+TOTAL=${#WALLS[@]}
+[ $TOTAL -eq 0 ] && exit 1
+
+CURRENT=$(swww query | grep -oP 'image: \K.*')
+
+INDEX=0
+for i in "${!WALLS[@]}"; do
+  [[ "$CURRENT" == *"${WALLS[$i]}" ]] && INDEX=$i && break
+done
+
+if [ "$1" = "prev" ]; then
+  INDEX=$(((INDEX - 1 + TOTAL) % TOTAL))
+else
+  INDEX=$(((INDEX + 1) % TOTAL))
+fi
+
+WALLPAPER="$WALLDIR/${WALLS[$INDEX]}"
+swww img "$WALLPAPER" --transition-fps 60 --transition-type center --transition-duration 1
+notify-send -i "$WALLPAPER" "$(($INDEX + 1))/$TOTAL" "${WALLS[$INDEX]}"
