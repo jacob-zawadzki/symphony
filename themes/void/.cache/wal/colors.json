@@ -1,22 +1,29 @@
 {
-  "wallpaper": "/home/vyrx/Wallpapers/wallhaven3.jpg",
-  "alpha": "100",
-  "colors": {
-    "color0": "#111318",
-    "color1": "",
-    "color2": "",
-    "color3": "",
-    "color4": "",
-    "color5": "",
-    "color6": "",
-    "color7": "",
-    "color8": "",
-    "color9": "",
-    "color10": "#a9c7ff",
-    "color11": "",
-    "color12": "",
-    "color13": "#37393e",
-    "color14": "",
-    "color15": "#e2e2e9"
-  }
+    "checksum": "f3be7912de46cedf9efdbf859bae2abb",
+    "wallpaper": "/home/vyrx/Wallpapers/nord/a_windmill_in_the_sky.png",
+    "alpha": "100",
+
+    "special": {
+        "background": "#1c1f27",
+        "foreground": "#c6c7c9",
+        "cursor": "#c6c7c9"
+    },
+    "colors": {
+        "color0": "#1c1f27",
+        "color1": "#CC8577",
+        "color2": "#607091",
+        "color3": "#9F768F",
+        "color4": "#C17C81",
+        "color5": "#7184AC",
+        "color6": "#AD8EAB",
+        "color7": "#c6c7c9",
+        "color8": "#636979",
+        "color9": "#CC8577",
+        "color10": "#607091",
+        "color11": "#9F768F",
+        "color12": "#C17C81",
+        "color13": "#7184AC",
+        "color14": "#AD8EAB",
+        "color15": "#c6c7c9"
+    }
 }
