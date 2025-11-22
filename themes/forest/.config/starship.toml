@@ -1,3 +1,4 @@
+# Symphony by vyrx / Theme: Forest / https://github.com/vyrx-dev
 add_newline = false
 command_timeout = 60
 format = """\
@@ -16,20 +17,20 @@ palette = "colors"
 
 [palettes.colors]
 mustard = '#af8700' # example
-color1 = '#b8c3ff'
-color2 = '#202c61'
-color3 = '#c6c5d0'
-color4 = '#1f1f25'
-color5 = '#202c61'
-color6 = '#121318'
-color7 = '#121318'
-color8 = '#b8c3ff'
-color9 = '#e4bad9'
+color1 = '#70cf6c'
+color2 = '#020802'
+color3 = '#b4e8b2'
+color4 = '#0a1a0a'
+color5 = '#4a7a4a'
+color6 = '#020802'
+color7 = '#fdfffd'
+color8 = '#62e2a4'
+color9 = '#9ed8dd'
 
 [directory]
-style = "fg:#b8c3ff bold" # color1
+style = "fg:#70cf6c bold" # color1
 read_only = " 󰌾"
-read_only_style = "fg:#ea6962" # dark blue
+read_only_style = "fg:#bf5a7c" # forest red
 truncation_length = 0
 truncate_to_repo = false
 format = "[$path]($style)[$read_only]($read_only_style)"
@@ -39,24 +40,24 @@ format = "[$path]($style)[$read_only]($read_only_style)"
 '~/Testing-repo' = 'work-project'
 
 [character]
-success_symbol = '[❯](fg:#b8c3ff bold)'
-error_symbol = '[❯](fg:#ffb4ab bold)'
-vicmd_symbol = '[❮](fg:#121318 bold)'
+success_symbol = '[❯](fg:#DFEC63 bold)'
+error_symbol = '[❯](fg:#bf5a7c bold)'
+vicmd_symbol = '[❮](fg:#020802 bold)'
 
 [git_branch]
-style = "fg:#e4bad9 bold" # color9 (red)
+style = "fg:#DFEC63 bold" # yellow
 format = '[$symbol$branch]($style) '
 
 [git_status]
 ahead = '⇡${count}'
 behind = '⇣${count}'
 diverged = '⇕⇡${ahead_count}⇣${behind_count}'
-format = '[[($all_status$ahead_behind )](fg:#ea6962)]($style)'
+format = '[[($all_status$ahead_behind )](fg:#bf5a7c)]($style)'
 # style = "bg:#394260"
 
 [os]
 format = "[$symbol]($style)"
-style = "fg:#b8c3ff bold" # color8
+style = "fg:#70cf6c bold" # color8
 disabled = false
 
 [os.symbols]
@@ -66,9 +67,8 @@ Ubuntu = "󰕈"
 
 # [time]
 # disabled = false
-# format = '[[ $time ](fg:#ea6962 )]($style)'
+# format = '[[ $time ](fg:#bf5a7c )]($style)'
 # time_format = "%R"
 
 [line_break]
 disabled = true
-
