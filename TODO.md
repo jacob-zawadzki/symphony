@@ -75,7 +75,8 @@
 
 - [ ] Main README
 - [ ] Themes & Scripts README
+- [ ] Symphony Website
 
 ---
 
-*Last updated: November 22, 2025 at 06:58 AM*
+*Last updated: November 23, 2025 at 05:49 AM*
