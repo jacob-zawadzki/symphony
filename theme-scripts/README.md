@@ -1,367 +1,515 @@
 # Symphony Theme System
 
-A unified theme management system for your Linux desktop. Switch between beautiful themes instantly with a single command.
+##### ⚠️Warning  
 
----
+> Read scripts before running. We are not responsible for any issues.  
+> Create an issue at <https://github.com/vyrx-dev/dotfiles/issues> if you encounter problems.
+
+## What is Symphony?
+
+Unified theme switcher for Hyprland. Change colors, wallpapers, and app themes with one command.
 
 ## Quick Start
 
 ```bash
-# Switch themes (opens menu)
+# Install
+cd ~/dotfiles/theme-scripts
+./install.sh
+
+# Switch themes
 symphony-theme switch
 
-# List all themes
-symphony-theme list
-
-# Remove a theme
-symphony-theme remove zen
-
-# Fix broken colors
+# Fix colors
 symphony-theme fix
-
-# Show all commands
-symphony-theme help
 ```
 
-**Keyboard shortcuts:** Already configured in `~/.config/hypr/bindings.conf`
+**Keyboard shortcuts** (in Hyprland):
 
-**Theme Management:**
-```bash
-SUPER+CTRL+SHIFT+SPACE          # Theme switcher (rofi menu)
-symphony-theme list             # Show all installed themes (terminal)
-```
-
-**Wallpaper Pickers:**
-```bash
-SUPER+ALT+SPACE                 # Wallpaper picker (all themes, swww only)
-SUPER+CTRL+SPACE                # Matugen wallpaper picker (generates colors)
-CTRL+ALT+SPACE                  # Random matugen wallpaper (matugen only)
-```
-
-**Cycle Through Wallpapers:**
-```bash
-SUPER+ALT+RIGHT                 # Next wallpaper in current theme folder
-SUPER+ALT+LEFT                  # Previous wallpaper in current theme folder
-```
-
-**Other:**
-```bash
-SUPER+SHIFT+P                   # Color picker (hyprpicker)
-```
-
----
+- `SUPER+CTRL+SHIFT+SPACE` - Theme switcher
+- `SUPER+ALT+LEFT/RIGHT` - Cycle wallpapers
+- `SUPER+CTRL+SPACE` - Matugen picker (dynamic colors)
 
 ## How It Works
 
-The system uses **symlinks** to connect theme files to your config folders.
+Symphony uses **symlinks** to connect theme files to your configs.
 
 ```
-~/dotfiles/themes/          → Your theme collection
-    ├── zen/
-    ├── sakura/
-    ├── tokyo-night/
-    └── matugen/           → Dynamic (wallpaper-based)
+~/dotfiles/themes/zen/           → Theme storage
+    ├── .config/kitty/colors.conf
+    ├── .config/rofi/colors.rasi
+    └── backgrounds/wallpaper.jpg
 
-~/.config/                 → Active theme (symlinks)
-    ├── hypr/theme/colors.conf
-    ├── kitty/colors.conf
-    └── ...
+~/.config/                        → Active (symlinked)
+    ├── kitty/colors.conf  → points to zen/
+    └── rofi/colors.rasi   → points to zen/
 ```
 
-When you switch themes, the system:
-1. Removes old symlinks
-2. Creates new symlinks to the chosen theme
-3. Changes wallpaper
-4. Reloads all applications
-5. Shows a notification
+When switching themes:
 
----
+1. Remove old symlinks
+2. Create new symlinks to selected theme
+3. Change wallpaper
+4. Reload apps
 
-## Installation
+<details>
+<summary><b>📦 Installation</b></summary>
 
-**Quick install (with animations):**
+### One-line install
+
 ```bash
-cd ~/dotfiles
-bash theme-scripts/install-symphony-gum.sh
+cd ~/dotfiles/theme-scripts
+./install.sh
 ```
 
-**Standard install:**
+The installer:
+
+- Auto-detects `gum` (fancy UI)
+- Falls back to plain mode if needed
+- Creates `symphony-theme` command
+- Offers theme selection
+
+### After install - Reload your shell
+
+**Bash:**
+
 ```bash
-cd ~/dotfiles
-bash theme-scripts/install-symphony-themes.sh
+source ~/.bashrc
 ```
 
-**After installation:**
-```bash
-# Reload your shell
-source ~/.zshrc  # or ~/.bashrc
+**Zsh:**
 
-# Switch to your first theme
+```bash
+source ~/.zshrc
+```
+
+**Fish:**
+
+```fish
+source ~/.config/fish/config.fish
+```
+
+### Test it
+
+```bash
 symphony-theme switch
 ```
 
----
+### First-time setup checklist
 
-## Adding a New Theme
+- [x] Run installer
+- [x] Reload shell
+- [x] Test theme switch
+- [ ] Add wallpapers to theme backgrounds/
+- [ ] Generate missing configs if needed
 
-### Easy Method (Copy Existing Theme)
+</details>
+
+<details>
+<summary><b>🎨 Adding New Themes</b></summary>
+
+### Method 1: Copy Existing
 
 ```bash
-# 1. Copy a theme as template
+# Copy template
 cp -r ~/dotfiles/themes/zen ~/dotfiles/themes/my-theme
 
-# 2. Edit the colors in these files:
-cd ~/dotfiles/themes/my-theme/.config
-# - hypr/theme/colors.conf
-# - kitty/colors.conf
-# - alacritty/colors.toml
-# - rofi/colors.rasi
-# - cava (one color per line)
+# Edit colors (most important file)
+nvim ~/dotfiles/themes/my-theme/.config/kitty/colors.conf
 
-# 3. Replace wallpaper
-rm backgrounds/*
-cp /path/to/your-wallpaper.jpg backgrounds/
+# Add wallpaper
+cp wallpaper.jpg ~/dotfiles/themes/my-theme/backgrounds/
 
-# 4. Generate additional files
-symphony-theme generate-all
+# Generate other configs
+cd ~/dotfiles/theme-scripts
+./generate-configs --theme my-theme
 
-# 5. Test your theme
+# Test it
 symphony-theme switch
 ```
 
-### Manual Method (From Scratch)
+### Method 2: From Scratch
 
 ```bash
-# 1. Create folder structure
-THEME="my-theme"
-mkdir -p ~/dotfiles/themes/$THEME/.config/{hypr/theme,kitty,alacritty,rofi,rmpc/themes}
-mkdir ~/dotfiles/themes/$THEME/backgrounds
+# Create structure
+mkdir -p ~/dotfiles/themes/my-theme/.config/kitty
+mkdir ~/dotfiles/themes/my-theme/backgrounds
 
-# 2. Create color files (see existing themes for examples)
-nano ~/dotfiles/themes/$THEME/.config/hypr/theme/colors.conf
-nano ~/dotfiles/themes/$THEME/.config/kitty/colors.conf
-nano ~/dotfiles/themes/$THEME/.config/alacritty/colors.toml
-nano ~/dotfiles/themes/$THEME/.config/rofi/colors.rasi
-nano ~/dotfiles/themes/$THEME/.config/cava
+# Create kitty colors (16-color palette)
+nvim ~/dotfiles/themes/my-theme/.config/kitty/colors.conf
+```
 
-# 3. Add wallpaper
-cp wallpaper.jpg ~/dotfiles/themes/$THEME/backgrounds/
+**Kitty colors format:**
 
-# 4. Generate remaining configs
-symphony-theme generate-all
+```conf
+background       #0d0509
+foreground       #f0eaed
+color0           #1a1a1a    # black
+color1           #ff5555    # red
+color2           #50fa7b    # green
+color3           #f1fa8c    # yellow
+color4           #bd93f9    # blue
+color5           #ff79c6    # magenta
+color6           #8be9fd    # cyan
+color7           #f8f8f2    # white
+color8           #6272a4    # bright black
+color9-15        # bright versions of 1-7
+```
 
-# 5. Switch to your theme
+```bash
+# Add wallpaper
+cp wallpaper.jpg ~/dotfiles/themes/my-theme/backgrounds/
+
+# Generate all other configs
+cd ~/dotfiles/theme-scripts
+./generate-configs --theme my-theme
+
+# Test
 symphony-theme switch
 ```
 
----
+**What gets generated:**
 
-## Removing a Theme
+- ✓ starship.toml (shell prompt)
+- ✓ rofi/colors.rasi (launcher)
+- ✓ cava-config (visualizer)
+- ✓ rmpc/themes/theme.ron (music player)
+- ✓ yazi/theme.toml (file manager)
 
-**Easy way (with confirmation):**
+</details>
+
+<details>
+<summary><b>⚙️ Config Generation</b></summary>
+
+### Interactive Mode
+
 ```bash
-symphony-theme remove theme-name
+cd ~/dotfiles/theme-scripts
+./generate-configs
 ```
 
-**Manual way:**
+Shows missing configs and lets you generate them.
+
+### Command Line
+
 ```bash
-# 1. Switch to a different theme first
+# Single theme
+./generate-configs --theme zen
+
+# All themes
+./generate-configs --all
+
+# Force regenerate
+./generate-configs --theme zen --force
+```
+
+### How It Works
+
+**Color Source Priority:**
+
+1. `kitty/colors.conf` (preferred)
+2. `btop/themes/*.theme` (fallback)
+3. Skip if neither exists
+
+**What It Does:**
+
+- Extracts colors from source
+- Generates missing configs
+- Skips existing files (unless --force)
+- Uses proper color schemes (learned from zen/sakura/gruvbox)
+
+</details>
+
+<details>
+<summary><b>🗑️ Removing Themes</b></summary>
+
+### Uninstall Script
+
+```bash
+cd ~/dotfiles/theme-scripts
+./uninstall.sh
+```
+
+**Options:**
+
+1. Delete specific themes (multi-select)
+2. Complete removal (nuke everything)
+
+### Manual Removal
+
+```bash
+# Switch to different theme first
 symphony-theme switch
 
-# 2. Delete the theme folder
-rm -rf ~/dotfiles/themes/theme-name
+# Delete theme
+rm -rf ~/dotfiles/themes/old-theme
 ```
 
----
+</details>
 
-## Two Theme Modes
+<details>
+<summary><b>🎯 Theme Modes</b></summary>
 
-### Custom Themes (Static Colors)
-- Fixed color schemes that never change
-- Perfect for carefully crafted aesthetics
-- Examples: zen, sakura, tokyo-night, vague, void
-- Change wallpaper anytime: `SUPER+ALT+SPACE` (wallPicker)
+### Static Themes
 
-### Matugen (Dynamic Colors)
-- Colors generated from your wallpaper
-- Changes automatically when you change wallpaper
-- Uses Material Design 3 color system
+- Fixed colors (zen, sakura, gruvbox, etc.)
+- Change wallpaper anytime (`SUPER+ALT+SPACE`)
+- Colors stay the same
 
-**To use matugen:**
+### Matugen (Dynamic)
+
+- Colors generated from wallpaper
+- Material Design 3 system
+- Auto-updates when wallpaper changes
+
+**Switch to matugen:**
+
 ```bash
-symphony-theme switch           # Select "matugen"
-# SUPER+CTRL+SPACE              # Pick wallpaper → colors update automatically
+symphony-theme switch  # Select "matugen"
 ```
 
-**To use static themes:**
-```bash
-symphony-theme switch           # Select any custom theme (zen, sakura, etc.)
-# SUPER+ALT+SPACE               # Change wallpaper (keeps theme colors)
-```
+**Pick wallpaper:**
 
-**Wallpaper controls:**
-```bash
-SUPER+ALT+SPACE                 # Wallpaper picker (all themes, swww only)
-SUPER+CTRL+SPACE                # Matugen picker (generates colors from wallpaper)
-CTRL+ALT+SPACE                  # Random matugen wallpaper (matugen only)
-SUPER+ALT+RIGHT/LEFT            # Cycle wallpapers in current theme folder
-swww img /path/to/image.jpg     # Manual wallpaper change
-```
+- `SUPER+CTRL+SPACE` - Matugen picker (generates colors)
+- `CTRL+ALT+SPACE` - Random matugen wallpaper
 
----
+**Note:** Matugen scripts are locked when using static themes (prevents accidental color changes).
 
-## Commands
+</details>
 
-| Command | What It Does |
+<details>
+<summary><b>🛠️ Commands</b></summary>
+
+### Main Commands
+
+| Command | Description |
 |---------|-------------|
-| `symphony-theme switch` | Open theme menu and switch |
-| `symphony-theme list` | Show all installed themes |
+| `symphony-theme switch [theme]` | Switch themes (menu or direct) |
+| `symphony-theme list` | Show installed themes |
 | `symphony-theme remove <name>` | Remove a theme |
 | `symphony-theme fix` | Fix broken symlinks |
-| `symphony-theme generate-all` | Regenerate all theme configs |
-| `symphony-theme generate-starship` | Regenerate prompt configs |
-| `symphony-theme generate-cava` | Regenerate visualizer configs |
-| `symphony-theme generate-rmpc` | Regenerate music player themes |
-| `symphony-theme help` | Show help message |
+| `symphony-theme generate` | Generate configs (interactive) |
+| `symphony-theme version` / `-i` / `--info` | Show version and info |
+| `symphony-theme help` | Show help |
 
----
+### Scripts
 
-## Troubleshooting
+```bash
+cd ~/dotfiles/theme-scripts
+
+# Generate configs
+./generate-configs                    # Interactive
+./generate-configs --theme zen        # Single theme
+./generate-configs --all              # All themes
+
+# Uninstall
+./uninstall.sh                        # Remove themes/system
+
+# Lock matugen mode
+./utils/lock-matugen-mode.sh          # Add locks to wallpaper scripts (theme-switch will handle this)
+```
+
+</details>
+
+<details>
+<summary><b>🔧 Troubleshooting</b></summary>
 
 ### Colors look wrong
+
 ```bash
 symphony-theme fix
 ```
 
 ### Theme won't switch
+
 ```bash
 # Check current theme
-cat ~/.current-theme
+cat ~/.config/symphony/.current-theme
 
-# Manually switch
+# Manual switch
 cd ~/dotfiles/themes
 stow -D old-theme
 stow new-theme
-echo "new-theme" > ~/.current-theme
-hyprctl reload
 ```
 
-### Wallpaper picker not working
+### Wallpaper picker blocked
 
-**Two wallpaper pickers available:**
+- `wallPicker` (SUPER+ALT+SPACE) works with all themes
+- `selectWall` (SUPER+CTRL+SPACE) only works in matugen mode
+- Switch to matugen first if you want dynamic colors
 
-1. **wallPicker** (`SUPER+ALT+SPACE`) - Works with ALL themes
-   - Just changes wallpaper using swww
-   - Keeps your theme colors intact
-   - Use this for custom themes
+### Config missing
 
-2. **selectWall** (`SUPER+CTRL+SPACE`) - Matugen only
-   - Generates new colors from wallpaper
-   - Only works when matugen theme is active
-   - Blocked on custom themes to protect your colors
-
-**If selectWall is blocked:**
 ```bash
-# Switch to matugen first
-symphony-theme switch  # Select "matugen"
-# SUPER+CTRL+SPACE     # Now works
+cd ~/dotfiles/theme-scripts
+./generate-configs --theme my-theme
 ```
 
-**Or use wallPicker instead:**
-```bash
-# SUPER+ALT+SPACE      # Works with any theme
+</details>
+
+<details>
+<summary><b>📋 What's Included</b></summary>
+
+Each theme has configs for:
+
+| App | Config File | Colors From |
+|-----|------------|-------------|
+| Hyprland | `hypr/theme/colors.conf` | Manual |
+| Kitty | `kitty/colors.conf` | **Source** |
+| Alacritty | `alacritty/colors.toml` | Manual |
+| Rofi | `rofi/colors.rasi` | kitty |
+| Starship | `starship.toml` | kitty |
+| Cava | `cava-config` | kitty |
+| RMPC | `rmpc/themes/theme.ron` | kitty |
+| Yazi | `yazi/theme.toml` | pywal |
+| Btop | `btop/themes/*.theme` | Manual |
+| Vesktop | `vesktop/themes/*.css` | Manual |
+
+**Note:** `kitty/colors.conf` is the main color source for generators.
+
+</details>
+
+<details>
+<summary><b>📁 Project Structure</b></summary>
+
 ```
+theme-scripts/
+├── core/                    # Main functionality
+│   ├── switch-theme.sh     # Theme switcher
+│   ├── fix-symlinks.sh     # Fix broken links
+│   ├── update-cava-colors.sh
+│   ├── update-rmpc-theme.sh
+│   └── update-obsidian-theme.sh
+│
+├── utils/                   # Maintenance
+│   └── lock-matugen-mode.sh # Lock matugen scripts
+│
+├── generate-configs         # Config generator
+├── uninstall.sh            # Removal tool
+├── install.sh              # Installer
+├── symphony-theme          # Main command
+└── README.md
+```
+
+**Key principles:**
+
+- Auto-detection (no hardcoded theme lists)
+- Smart fallbacks (kitty → btop → skip)
+- Skip existing files (unless forced)
+- Human-readable code
+
+</details>
+
+<details>
+<summary><b>🤝 Contributing</b></summary>
+
+This is a personal dotfiles project made public. Contributions welcome!
+
+**Guidelines:**
+
+- Keep it simple (no enterprise architecture)
+- Maintain auto-detection (no hardcoded lists)
+- Test with multiple themes
+- Add clear documentation
+
+**Code style:**
+
+```bash
+# Good: Auto-detects
+for dir in "$THEMES_DIR"/*; do
+  process_theme "$(basename "$dir")"
+done
+
+# Bad: Hardcoded
+THEMES=("zen" "sakura")
+```
+
+</details>
 
 ---
 
-## What's Included
+<details>
+<summary><b>❓ FAQ</b></summary>
 
-Each theme contains color configurations for:
-- **Hyprland** - Window manager colors
-- **Kitty/Alacritty** - Terminal colors
-- **Rofi** - Application launcher colors
-- **Cava** - Audio visualizer gradient
-- **RMPC** - Music player theme
-- **Starship** - Command prompt colors
-- **Wallpaper(s)** - Matching backgrounds
+### Q: Where are colors generated from?
 
----
+A: `kitty/colors.conf` is the main source. Generators extract colors and create configs for other apps.
 
-**System Version:** 2.1  
-**Location:** `~/dotfiles/theme-scripts/`  
-**Command:** `symphony-theme` (or `theme` for backward compatibility)
+### Q: What if I only have btop colors?
 
----
+A: Generators fall back to btop if kitty is missing.
 
-## Vesktop Theme Support
+### Q: Can I use my own wallpaper picker?
 
-### How It Works
+A: Yes! Just make sure it updates the symlink: `ln -sf "$WALLPAPER" "$THEME/wallpaper"`
 
-Every theme (including matugen) now has full Vesktop/Discord theme support using the Midnight Discord base theme with your theme colors.
+### Q: Does this work with other window managers?
 
-**When you switch themes:**
-- The Vesktop theme automatically updates to match your current theme colors
-- No manual intervention needed!
+A: Core system works anywhere. Hyprland-specific parts are optional.
 
-### Commands
+### Q: How do I add support for a new app?
 
-```bash
-# Switch themes (includes Vesktop)
-symphony-theme switch
-# or use: SUPER+CTRL+SHIFT+SPACE
+A: Create generator that extracts from kitty/btop and outputs app config.
 
-# Regenerate Vesktop themes for all static themes
-symphony-theme generate-vesktop
+### Q: What's the difference between wallPicker and selectWall?
 
-# Regenerate all configs (includes Vesktop)
-symphony-theme generate-all
-```
+- `wallPicker`: Changes wallpaper only (works with all themes)
+- `selectWall`: Changes wallpaper + generates colors (matugen only)
 
-### Adding Vesktop to a New Theme
-
-When you create a new theme, Vesktop theme generation is automatic:
-
-```bash
-# After creating your theme structure
-symphony-theme generate-all
-# or
-symphony-theme generate-vesktop
-```
-
-The generator extracts colors from your theme's:
-- Alacritty config (background, foreground, accent colors)
-- Btop theme (theme-matched highlights and colors)
-
-### Matugen Support
-
-Matugen themes work seamlessly:
-- Matugen generates Vesktop theme from wallpaper colors automatically
-- Uses Material Design 3 color system
-- Stored in `themes/matugen/.config/vesktop/themes/`
-- No special handling needed when switching!
-
-### Troubleshooting
-
-**Vesktop theme not updating?**
-```bash
-# Check if theme has vesktop file
-ls -la ~/dotfiles/themes/[YOUR_THEME]/.config/vesktop/themes/
-
-# Regenerate if missing
-symphony-theme generate-vesktop
-
-# Switch theme again
-symphony-theme switch
-```
-
-**Colors look wrong?**
-```bash
-# Regenerate all configs
-symphony-theme generate-all
-
-# Fix broken symlinks
-symphony-theme fix
-```
+</details>
 
 ---
 
+## File Reference
+
+### Core Scripts
+
+| File | Purpose |
+|------|---------|
+| `symphony-theme` | Main command entry point |
+| `core/switch-theme.sh` | Theme switcher with menu |
+| `core/fix-symlinks.sh` | Recreates all symlinks |
+| `core/update-cava-colors.sh` | Updates Cava visualizer colors |
+| `core/update-rmpc-theme.sh` | Updates RMPC music player theme |
+| `core/update-obsidian-theme.sh` | Updates Obsidian note-taking theme |
+| `core/generate-vesktop-themes.sh` | Generates Discord/Vesktop themes |
+
+### Utilities
+
+| File | Purpose |
+|------|---------|
+| `generate-configs` | Smart config generator (kitty → all apps) |
+| `install.sh` | Installer with auto-detection |
+| `uninstall.sh` | Removal tool (selective or complete) |
+| `utils/lock-matugen-mode.sh` | Locks matugen on wallpaper scripts |
+
+## Contributing
+
+Symphony v2.0 is a personal dotfiles project made public. Contributions are welcome!
+
+**What's Coming:**
+
+- Community theme repository
+- Plugin system for custom generators
+- Better documentation
+- Unified rofi menu
+
+**Guidelines:**
+
+- Keep it simple
+- Auto-detect everything (no hardcoded lists)
+- Test with multiple themes
+- Clear documentation
+
+**Submitting Themes:**
+
+- Community themes coming soon
+- Share your themes via issues/PRs
+- Include: kitty colors, wallpaper, screenshots
+
+---
+
+🎼 Version - 2.0  
+🎼 Author - vyrx  
+🎼 License - MIT  
+
+---

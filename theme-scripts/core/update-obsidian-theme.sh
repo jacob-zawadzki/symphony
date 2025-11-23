@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# update-obsidian-theme.sh: Bootstrap and update theme for Obsidian vaults
-#
-# - Ensures registry at ~/.local/state/symphony/obsidian-vaults
-#   - Populates by extracting vault paths from ~/.config/obsidian/obsidian.json
-# - For each valid vault:
-#   - Ensures .obsidian/themes/Symphony/{manifest.json, theme.css}
-#   - Updates theme.css (uses current theme's obsidian.css if present; otherwise generates)
+# Symphony - Obsidian Theme Updater
+# Updates Obsidian theme across all vaults
+# Usage: ./update-obsidian-theme.sh
+#        ./update-obsidian-theme.sh --reset  (removes all Symphony themes)
+# https://github.com/vyrx-dev/dotfiles
 
 VAULTS_FILE="$HOME/.local/state/symphony/obsidian-vaults"
 THEMES_DIR="$HOME/dotfiles/themes"
-CURRENT_THEME_FILE="$HOME/.current-theme"
+CURRENT_THEME_FILE="$HOME/.config/symphony/.current-theme"
 
 # Get current theme name
 get_current_theme() {
@@ -33,12 +31,12 @@ ensure_vaults_file() {
   tmpfile="$(mktemp)"
   # Extract the Obsidian vault location from config file <base>/<vault>/.obsidian
   jq -r '.vaults | values[].path' ~/.config/obsidian/obsidian.json 2>/dev/null >>"$tmpfile"
-    if [ -s "$tmpfile" ]; then
-      sort -u "$tmpfile" >"$VAULTS_FILE"
-    else
-      : >"$VAULTS_FILE"
-    fi
-    rm "$tmpfile"
+  if [ -s "$tmpfile" ]; then
+    sort -u "$tmpfile" >"$VAULTS_FILE"
+  else
+    : >"$VAULTS_FILE"
+  fi
+  rm "$tmpfile"
 }
 
 # Ensure theme directory and minimal manifest exist in a vault
@@ -92,8 +90,8 @@ calculate_brightness() {
 # Returns ratio scaled by 100 (e.g., 450 = 4.5:1 ratio)
 calculate_contrast_ratio() {
   local hex1="$1" hex2="$2"
-  local br1=$(calculate_brightness "$hex1")  # 0-255 range
-  local br2=$(calculate_brightness "$hex2")  # 0-255 range
+  local br1=$(calculate_brightness "$hex1") # 0-255 range
+  local br2=$(calculate_brightness "$hex2") # 0-255 range
 
   # Ensure br1 is the lighter color (higher brightness)
   if [ $br1 -lt $br2 ]; then
@@ -109,8 +107,8 @@ calculate_contrast_ratio() {
 
 # Check if two colors meet minimum contrast threshold
 meets_contrast_threshold() {
-  local ratio="$1"        # Ratio scaled by 100 (from calculate_contrast_ratio)
-  local threshold="$2"    # Threshold scaled by 100 (300=3:1, 450=4.5:1, 700=7:1)
+  local ratio="$1"     # Ratio scaled by 100 (from calculate_contrast_ratio)
+  local threshold="$2" # Threshold scaled by 100 (300=3:1, 450=4.5:1, 700=7:1)
   [ $ratio -ge $threshold ]
 }
 
@@ -127,19 +125,19 @@ color_distance() {
 extract_btop_colors() {
   local theme_dir="$1"
   local btop_file=""
-  
+
   # Try multiple locations for btop theme
   for file in "$theme_dir/btop.theme" "$theme_dir/.config/btop/themes/current.theme"; do
     [ -f "$file" ] && btop_file="$file" && break
   done
-  
+
   [ -z "$btop_file" ] && return 1
-  
+
   # Extract main colors
   local main_fg=$(grep 'theme\[main_fg\]' "$btop_file" | sed 's/.*=//;s/[" ]//g;s/#//' | head -1)
   local title=$(grep 'theme\[title\]' "$btop_file" | sed 's/.*=//;s/[" ]//g;s/#//' | head -1)
   local hi_fg=$(grep 'theme\[hi_fg\]' "$btop_file" | sed 's/.*=//;s/[" ]//g;s/#//' | head -1)
-  
+
   # Return as space-separated values
   echo "${main_fg:-ffffff} ${title:-ffffff} ${hi_fg:-ffffff}"
 }
@@ -148,38 +146,44 @@ extract_btop_colors() {
 extract_alacritty_accents() {
   local theme_dir="$1"
   local alacritty_file=""
-  
+
   for file in "$theme_dir/alacritty.toml" "$theme_dir/.config/alacritty/colors.toml"; do
     [ -f "$file" ] && alacritty_file="$file" && break
   done
-  
+
   [ -z "$alacritty_file" ] && return 1
-  
+
   # Extract bright colors (good for accents)
-  grep -A 20 "\[colors.bright\]" "$alacritty_file" | \
-    grep -E "(red|green|yellow|blue|magenta|cyan)" | \
-    sed "s/.*= *[\"']\(#[0-9a-fA-F]\{6\}\)[\"'].*/\1/" | \
-    tr '[:upper:]' '[:lower:]' | \
+  grep -A 20 "\[colors.bright\]" "$alacritty_file" |
+    grep -E "(red|green|yellow|blue|magenta|cyan)" |
+    sed "s/.*= *[\"']\(#[0-9a-fA-F]\{6\}\)[\"'].*/\1/" |
+    tr '[:upper:]' '[:lower:]' |
     grep -E '^#[0-9a-f]{6}$'
 }
 
 # Adjust color brightness
 adjust_brightness() {
   local hex="$1"
-  local amount="$2"  # Positive = lighter, negative = darker
-  
+  local amount="$2" # Positive = lighter, negative = darker
+
   read -r r g b <<<"$(hex_to_rgb "$hex")"
-  r=$((r + amount)); [ $r -lt 0 ] && r=0; [ $r -gt 255 ] && r=255
-  g=$((g + amount)); [ $g -lt 0 ] && g=0; [ $g -gt 255 ] && g=255
-  b=$((b + amount)); [ $b -lt 0 ] && b=0; [ $b -gt 255 ] && b=255
-  
+  r=$((r + amount))
+  [ $r -lt 0 ] && r=0
+  [ $r -gt 255 ] && r=255
+  g=$((g + amount))
+  [ $g -lt 0 ] && g=0
+  [ $g -gt 255 ] && g=255
+  b=$((b + amount))
+  [ $b -lt 0 ] && b=0
+  [ $b -gt 255 ] && b=255
+
   printf "#%02x%02x%02x" "$r" "$g" "$b"
 }
 
 # Main color extraction and theme generation
 extract_theme_data() {
   local theme_dir="$1"
-  
+
   # Get primary colors from Alacritty
   local bg_color="#1a1b26"
   local fg_color="#a9b1d6"
@@ -201,11 +205,11 @@ extract_theme_data() {
   local text_normal="#${btop_fg}"
   local accent_primary="#${btop_title}"
   local accent_secondary="#${btop_hi}"
-  
+
   # Get accent colors from alacritty bright palette
   local -a accents
   readarray -t accents < <(extract_alacritty_accents "$theme_dir" | head -8)
-  
+
   # Fallback if no accents found
   [ ${#accents[@]} -eq 0 ] && accents=("$accent_primary" "$accent_secondary" "$fg_color")
 
@@ -255,7 +259,7 @@ extract_theme_data() {
   for file in "$theme_dir/btop.theme" "$theme_dir/.config/btop/themes/current.theme"; do
     [ -f "$file" ] && btop_file="$file" && break
   done
-  
+
   if [ -n "$btop_file" ]; then
     local div_line=$(grep 'theme\[div_line\]' "$btop_file" | sed 's/.*=//;s/[" ]//g' | head -1)
     if [[ "$div_line" =~ ^#?[0-9a-fA-F]{6}$ ]]; then
@@ -267,8 +271,8 @@ extract_theme_data() {
   # Muted text color (between fg and bg)
   read -r r1 g1 b1 <<<"$(hex_to_rgb "$bg_color")"
   read -r r2 g2 b2 <<<"$(hex_to_rgb "$text_normal")"
-  local text_muted=$(printf "#%02x%02x%02x" $(((r1 + r2*2) / 3)) $(((g1 + g2*2) / 3)) $(((b1 + b2*2) / 3)))
-  local text_faint=$(printf "#%02x%02x%02x" $(((r1*2 + r2) / 3)) $(((g1*2 + g2) / 3)) $(((b1*2 + b2) / 3)))
+  local text_muted=$(printf "#%02x%02x%02x" $(((r1 + r2 * 2) / 3)) $(((g1 + g2 * 2) / 3)) $(((b1 + b2 * 2) / 3)))
+  local text_faint=$(printf "#%02x%02x%02x" $(((r1 * 2 + r2) / 3)) $(((g1 * 2 + g2) / 3)) $(((b1 * 2 + b2) / 3)))
 
   # Extract fonts
   local monospace_font="CaskaydiaMono Nerd Font"
@@ -289,8 +293,11 @@ extract_theme_data() {
 
   # Generate CSS
   cat <<EOF
-/* Symphony Theme for Obsidian */
-/* Generated: $(date '+%Y-%m-%d %H:%M') | Theme: $(get_current_theme) */
+/* ═══════════════════════════════════════════════════════════
+ *  Generated with Symphony
+ *  Theme: $(get_current_theme)
+ *  https://github.com/vyrx-dev
+ * ═══════════════════════════════════════════════════════════ */
 
 .theme-dark, .theme-light {
   /* === Core === */
@@ -488,7 +495,7 @@ if [ "${1:-}" = "--reset" ]; then
   echo "♻️  Resetting Symphony Obsidian themes and registry..."
   if [ -f "$VAULTS_FILE" ] && [ -s "$VAULTS_FILE" ]; then
     while IFS= read -r vault_path || [ -n "$vault_path" ]; do
-      case "$vault_path" in ""|\#*) continue ;; esac
+      case "$vault_path" in "" | \#*) continue ;; esac
       vault_path="${vault_path%/}"
       vault_name=$(basename "$vault_path")
       theme_dir="$vault_path/.obsidian/themes/Symphony"
