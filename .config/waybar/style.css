@@ -91,7 +91,6 @@ window#waybar {
 #network,
 #bluetooth,
 #pulseaudio,
-#custom-arch,
 #backlight,
 #window,
 #custom-screenrecording-indicator {
@@ -130,9 +129,12 @@ window#waybar {
   font-size: 13px;
 }
 
-#custom-arch {
-  margin-left: 4.75px;
+#custom-logo {
+  padding: 0 6px;
+  margin-right: 6px;
   font-size: 15px;
+  background: @waybar_accent;
+  color: @waybar_accent_fg;
 }
 
 #custom-screenrecording-indicator.active {
