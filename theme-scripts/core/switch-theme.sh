@@ -191,7 +191,12 @@ if [ "$SELECTED" = "matugen" ] || [ -d "$THEMES_DIR/$SELECTED" ]; then
   # Set wallpaper if exists
   if [ -n "$WALLPAPER" ]; then
     swww query &>/dev/null || swww-daemon --format xrgb &
-    swww img "$WALLPAPER" --transition-fps 60 --transition-type=any --transition-duration=1
+    swww img "$WALLPAPER" \
+  --transition-type center \
+  --transition-pos top-right \
+  --transition-fps 120 \
+  --transition-duration 1 \
+  --transition-bezier 0.25,0.1,0.25,1.0
   fi
 
   # Always update wallpaper symlink to whatever swww is currently displaying
