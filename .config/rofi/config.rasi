@@ -1,5 +1,3 @@
-@import "colors.rasi"
-
 configuration {
     modi: "drun";
     show-icons: true;
@@ -14,115 +12,124 @@ configuration {
 }
 
 * {
-    background-color:   transparent;
-    text-color:         @on-surface-variant;
+    background: rgba(0, 0, 0, 0);
+    background-alt: rgba(0, 0, 0, 0);
+    foreground: rgba(255, 255, 255, 0.97);
+    selected: rgba(255, 255, 255, 0.10);
+    active: rgba(255, 255, 255, 0.10);
+    urgent: rgba(255, 85, 85, 0.67);
+    
+    border-colour: rgba(255, 255, 255, 0.10);
     separatorcolor: transparent;
-    margin:     0;
-    padding:    0;
-    spacing:    0;
+    background-color: transparent;
+    text-color: @foreground;
 }
 
 window {
-    background-color:   @surface-dim;
-    transparency:       "real";
-    location:           center;
-    width:              480;
-    border-radius:      14;
-    border:             1px;
-    border-color:       @outline-variant;
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 400px;
+    border-radius: 10px;
+    cursor: "default";
+    background-color: rgba(20, 20, 20, 0.70);
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.10);
 }
 
 mainbox {
-    padding:            18px;
-    spacing:            10px;
-    background-color:   transparent;
-    children:           [ inputbar, listview ];
+    enabled: true;
+    spacing: 0px;
+    margin: 0px;
+    padding: 16px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
 }
 
 inputbar {
-    padding:            10px 14px;
-    spacing:            10px;
-    border-radius:      10px;
-    background-color:   @surface-container;
-    children:           [ prompt, entry ];
+    enabled: true;
+    spacing: 10px;
+    margin: 0px 0px 12px 0px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.10);
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.15);
+    text-color: @foreground;
+    children: [ "prompt", "entry" ];
 }
 
 prompt {
-    background-color:   transparent;
-    text-color:         @on-surface-variant;
+    enabled: true;
+    background-color: transparent;
+    text-color: inherit;
 }
 
 entry {
-    background-color:   transparent;
-    text-color:         @on-surface;
-    placeholder:        "Search";
-    placeholder-color:  @outline;
-    cursor:             text;
-}
-
-message {
-    border:             1px 0 0;
-    border-color:       @surface-container;
-    background-color:   @surface-container;
-}
-
-textbox {
-    padding:    8px 14px;
+    enabled: true;
+    background-color: transparent;
+    text-color: inherit;
+    cursor: text;
+    placeholder: "Search apps...";
+    placeholder-color: rgba(255, 255, 255, 0.50);
 }
 
 listview {
-    lines:              6;
-    columns:            1;
-    fixed-height:       false;
-    scrollbar:          false;
-    spacing:            3px;
-    background-color:   transparent;
+    enabled: true;
+    columns: 1;
+    lines: 5;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 3px;
+    background-color: transparent;
+    text-color: @foreground;
+    cursor: "default";
 }
 
 element {
-    padding:            9px 12px;
-    spacing:            12px;
-    border-radius:      8px;
-    background-color:   transparent;
-    text-color:         @on-surface-variant;
+    enabled: true;
+    spacing: 10px;
+    margin: 0px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @foreground;
+    cursor: pointer;
 }
 
 element normal.normal {
-    background-color:   transparent;
-    text-color:         @on-surface-variant;
-}
-
-element normal.active {
-    background-color:   transparent;
-    text-color:         @on-surface;
-}
-
-element alternate.normal {
-    background-color:   transparent;
-    text-color:         @on-surface-variant;
-}
-
-element alternate.active {
-    background-color:   transparent;
-    text-color:         @on-surface;
+    background-color: transparent;
+    text-color: @foreground;
 }
 
 element selected.normal {
-    background-color:   @surface-container-high;
-    text-color:         @on-surface;
+    background-color: rgba(255, 255, 255, 0.15);
+    text-color: @foreground;
 }
 
-element selected.active {
-    background-color:   @surface-container-highest;
-    text-color:         @on-surface;
+element alternate.normal {
+    background-color: transparent;
+    text-color: @foreground;
 }
 
 element-icon {
-    size:               22px;
-    vertical-align:     0.5;
+    background-color: transparent;
+    text-color: inherit;
+    size: 28px;
+    cursor: inherit;
 }
 
 element-text {
-    vertical-align:     0.5;
-    text-color:         inherit;
+    background-color: transparent;
+    text-color: inherit;
+    highlight: bold;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
 }

@@ -10,7 +10,7 @@ fi
 
 # Wallpaper picker with pywal integration
 WALLPAPER_DIR="$HOME/Wallpapers/"
-SWWW_PARAMS="--transition-fps 60 --transition-type=random --transition-duration=1"
+SWWW_PARAMS="--transition-fps 120 --transition-type=grow --transition-duration=1 --transition-bezier 0.25,0.1,0.25,1.0 --transition-pos top-right "
 
 # Get focused monitor (fallback to HDMI-A-1)
 focused_monitor=$(hyprctl -j monitors | jq -r '.[] | select(.focused==true).name')
@@ -68,7 +68,6 @@ for wallpaper in "${wallpapers[@]}"; do
     hyprctl reload
     restart-app waybar
     restart-app swayosd-server
-    killall -SIGUSR1 swaync
     killall -SIGUSR1 kitty
     pkill -SIGUSR1 alacritty
     pkill -SIGUSR2 btop
