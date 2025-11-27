@@ -1,15 +1,14 @@
 return {
   {
     "vague2k/vague.nvim",
+    lazy = false,
     priority = 1000,
     opts = {
       -- transparent = true,
     },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "vague",
-    },
+    config = function(_, opts)
+      require("vague").setup(opts)
+      vim.cmd.colorscheme("vague")
+    end,
   },
 }

@@ -3,6 +3,7 @@ return {
     {
         "bjarneo/aether.nvim",
         name = "aether",
+        lazy = false,
         priority = 1000,
         opts = {
             disable_italics = false,
@@ -30,12 +31,7 @@ return {
         },
         config = function(_, opts)
             require("aether").setup(opts)
+            vim.cmd.colorscheme("aether")
         end,
-    },
-    {
-        "LazyVim/LazyVim",
-        opts = {
-            colorscheme = "aether",
-        },
     },
 }
