@@ -18,6 +18,7 @@
   ],
   "modules-right": [
     "custom/screenrecording-indicator",
+    "custom/idle-indicator",
     // "mpd",
     "group/tray-expander",
     "network",
@@ -28,9 +29,15 @@
     "clock"
   ],
   "custom/screenrecording-indicator": {
-    "on-click": "~/Scripts/screenrecord",
-    "exec": "~/Scripts/indicator-record.sh",
+    "on-click": "~/.config/hypr/scripts/screenrecord",
+    "exec": "~/.config/waybar/scripts/indicator-record",
     "signal": 8,
+    "return-type": "json"
+  },
+  "custom/idle-indicator": {
+    "on-click": "~/.config/hypr/scripts/toggle-idle",
+    "exec": "~/.config/waybar/scripts/indicator-idle",
+    "signal": 9,
     "return-type": "json"
   },
   "custom/logo": {
@@ -122,13 +129,6 @@
     "format": "{:L%H:%M}",
     "format-alt": "{:L%A %d %B}",
     "tooltip": false
-  },
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "",
-      "deactivated": ""
-    }
   },
   "network": {
     "format-icons": [
