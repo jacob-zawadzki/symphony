@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if pgrep -x hypridle >/dev/null; then
+  pkill -x hypridle
+  notify-send "Sleep disabled - Screen stays awake"
+else
+  uwsm-app -- hypridle >/dev/null 2>&1 &
+  notify-send "Sleep enabled - Screen will auto-lock"
+fi
+
+# Signal waybar to update indicator (RTMIN+9)
+pkill -RTMIN+9 waybar
