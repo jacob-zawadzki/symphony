@@ -11,14 +11,13 @@ window {
 
 /* ---- Mainbox ---- */
 mainbox {
-  children:
-    [ "inputbar", "message", "listview"];
+  children: [ "inputbar", "listview"];
 }
 
 /* ---- Entry ---- */
 entry {
   width: inherit;
-  placeholder: " 📋 Search  Clipboard ";
+  placeholder: "📋 Search Clipboard";
 }
 
 /* ---- Listview ---- */

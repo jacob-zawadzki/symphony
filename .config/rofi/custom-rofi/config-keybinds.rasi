@@ -4,19 +4,19 @@
 
 /* ---- Window ---- */
 window {
-  width: 1200px;
+  width: 700px;
   height: inherit;
 }
 
 /* ---- Mainbox ---- */
 mainbox {
-  children: [ "inputbar", "message", "listview" ];
+  children: [ "inputbar", "listview" ];
 }
 
 /* ---- Entry ---- */
 entry {
   width: inherit;
-  placeholder: " Search keybinds";
+  placeholder: "🔎 Search keybinds";
 }
 
 /* ---- Listview ---- */
@@ -24,7 +24,7 @@ listview {
   columns: 1;
   lines: 12;
   fixed-height: true;
-  spacing: 5px;
+  spacing: 4px;
   cycle: true;
   scrollbar: true;
 }
@@ -32,7 +32,7 @@ listview {
 /* ---- Elements ---- */
 element {
   orientation: horizontal;
-  padding: 8px 12px;
+  padding: 6px 10px;
 }
 
 element-icon {
