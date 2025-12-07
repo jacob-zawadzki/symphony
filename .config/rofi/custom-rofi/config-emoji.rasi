@@ -1,49 +1,37 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-// /* Main Config - emoji */
+/* Emoji picker - grid layout, emoji only */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
-/* ---- Mainbox ---- */
-mainbox {
-  children:
-    [ "inputbar", "message", "listview"];
-}
-
-/* ---- Window ---- */
 window {
-  width: inherit;
-  height: inherit;
+  width: 380px;
 }
 
-/* ---- Entry ---- */
 entry {
-  width: 37%;
-  placeholder: "💤 Search Emoji";
-  horizontal-align: 0.0;
+  placeholder: "Search emoji...";
 }
 
-/* ---- Listview ---- */
 listview {
-  columns: 2;
-  lines: 7;
+  columns: 5;
+  lines: 5;
   fixed-height: false;
-  scrollbar: false;
+  fixed-columns: true;
   spacing: 6px;
-  cycle: true;
+  flow: horizontal;
 }
 
-/* ---- Elements ---- */
 element {
-  orientation: horizontal;
+  padding: 10px;
+  border-radius: 6px;
+  spacing: 0px;
 }
 
 element-icon {
-  size: 0%;
+  enabled: false;
 }
 
 element-text {
-  horizontal-align: 0.0;
+  font: "CaskaydiaCove Nerd Font Mono 15";
+  horizontal-align: 0.5;
   vertical-align: 0.5;
-  padding: 0px;
-  margin: 0px;
+  expand: true;
 }

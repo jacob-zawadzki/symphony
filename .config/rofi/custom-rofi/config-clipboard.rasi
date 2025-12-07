@@ -1,46 +1,50 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Clipboard Config - Clipboard */
+/* Clipboard Config - with image previews */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Window ---- */
 window {
-  width: inherit;
-  height: inherit;
+  width: 600px;
 }
 
 /* ---- Mainbox ---- */
 mainbox {
   children: [ "inputbar", "listview"];
+  padding: 12px;
+}
+
+/* ---- Inputbar ---- */
+inputbar {
+  margin: 0px 0px 8px 0px;
+  padding: 8px 12px;
 }
 
 /* ---- Entry ---- */
 entry {
-  width: inherit;
-  placeholder: "📋 Search Clipboard";
+  placeholder: "Search clipboard...";
 }
 
 /* ---- Listview ---- */
 listview {
   columns: 1;
-  lines: 8;
+  lines: 6;
   fixed-height: true;
-  spacing: 6px;
+  spacing: 2px;
   cycle: true;
 }
 
 /* ---- Elements ---- */
 element {
   orientation: horizontal;
+  spacing: 8px;
+  padding: 4px 6px;
 }
 
 element-icon {
-  size: 0%;
+  size: 44px;
 }
 
 element-text {
   horizontal-align: 0.0;
   vertical-align: 0.5;
-  margin: 0px;
-  padding: 0px;
 }
