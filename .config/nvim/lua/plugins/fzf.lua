@@ -6,7 +6,7 @@ return {
   keys = {
     -- Quick access
     { ";r", function() require("fzf-lua").live_grep({ rg_opts = "--hidden -g '!.git'" }) end, desc = "Live Grep" },
-    { ";f", function() require("fzf-lua").files({ fd_opts = "--hidden --exclude .git" }) end, desc = "Search Files" },
+    { "<leader><leader>", function() require("fzf-lua").files({ fd_opts = "--hidden --exclude .git" }) end, desc = "Search Files" },
     { ";c", function() require("fzf-lua").colorschemes() end, desc = "Colorschemes" },
     { ";;", function() require("fzf-lua").buffers() end, desc = "Buffers" },
     { "\\\\", function() require("fzf-lua").resume() end, desc = "Resume Picker" },

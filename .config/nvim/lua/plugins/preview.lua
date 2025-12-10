@@ -14,7 +14,11 @@ return {
     event = { "VeryLazy" },
     build = "deno task --quiet build:fast",
     config = function()
-      require("peek").setup()
+      require("peek").setup {
+        close_on_bdelete = true,
+        theme = "dark",
+        app = "chromium", -- Or 'browser' for your default
+      }
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
@@ -40,7 +44,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = "markdown",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.icons" }, -- if you use standalone mini plugins
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
     opts = {},
   },
 }
