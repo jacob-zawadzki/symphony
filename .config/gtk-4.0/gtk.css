@@ -1,1 +1,2 @@
-@import 'colors.css';
+/* Theme colors - sourced from Symphony */
+@import '~/.config/symphony/current/.config/gtk-4.0/colors.css';
