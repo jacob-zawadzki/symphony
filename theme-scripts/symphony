@@ -264,7 +264,11 @@ switch)
 reload) cmd_reload ;;
 fix) cmd_fix ;;
 list | ls) cmd_list ;;
-current) current_theme ;;
+current)
+	echo ""
+	echo -e "  ${GREEN}●${RESET} $(current_theme)"
+	"$DOTFILES/scripts/fetch-colors" 2>/dev/null || true
+	;;
 remove | rm)
 	shift
 	cmd_remove "$@"
