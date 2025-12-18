@@ -40,8 +40,8 @@ for wallpaper in "${wallpapers[@]}"; do
   
   # Sync Hyprlock wallpaper from swww cache (same logic as lock-screen)
   CACHE="$HOME/.cache/swww"
-  MON=$(ls "$CACHE" 2>/dev/null | grep -v '_' | head -1)
-  if [[ -f "$CACHE/$MON" ]]; then
+  MON="$focused_monitor"
+  if [[ -n "$MON" && -f "$CACHE/$MON" ]]; then
     ln -sf "$(tr '\0' '\n' < "$CACHE/$MON" | sed -n '3p')" "$HOME/.cache/hyprlock-wallpaper"
   else
     ln -sf "$wallpaper" "$HOME/.cache/hyprlock-wallpaper"
