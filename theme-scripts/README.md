@@ -78,6 +78,26 @@ Symphony updates `~/.config/symphony/current` and runs hooks to reload apps. No 
 - Apps: yazi, rmpc, vesktop, obsidian
 - Extras: pywalfox, Neovim
 
+## Customization
+
+### Themed Rofi
+
+Rofi has a transparent glass/blur look by default - works well with any wallpaper. If you want it to match your theme colors instead:
+
+1. Open `~/.config/rofi/config.rasi`
+2. Uncomment `@import "colors.rasi"`
+3. Replace hardcoded color values with variables from `colors.rasi`
+
+Each theme has its own `colors.rasi` in `themes/<name>/.config/rofi/`
+
+### Themed Neovim
+
+Each theme includes a `theme.lua` in `themes/<name>/.config/nvim/`. To use it, copy or symlink to your nvim config:
+
+```bash
+ln -sf ~/.config/symphony/current/.config/nvim/theme.lua ~/.config/nvim/lua/plugins/theme.lua
+```
+
 ## Adding your own theme
 
 Copy an existing theme:
