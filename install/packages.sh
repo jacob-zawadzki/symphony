@@ -290,15 +290,16 @@ install_packages() {
 }
 
 ask_applications() {
-    command -v gum &>/dev/null || return
+    command -v gum &>/dev/null || return 0
 
     echo
-    gum confirm "Install optional applications?" || return
+    gum confirm "Install optional applications?" || return 0
 
     step "Select applications"
     local selected=$(printf '%s\n' "${applications[@]}" | gum choose --no-limit --height 20)
 
     [[ -n "$selected" ]] && install_packages $selected
+    return 0
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
