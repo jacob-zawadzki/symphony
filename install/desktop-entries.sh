@@ -35,7 +35,11 @@ ask_webapps() {
 
     mkdir -p "$TARGET_DIR"
     for app in $selected; do
-        cp "$APPS_DIR/$app.desktop" "$TARGET_DIR/"
+        local src="$APPS_DIR/$app.desktop"
+        local dst="$TARGET_DIR/$app.desktop"
+        # Skip if already linked or same file
+        [[ "$src" -ef "$dst" ]] && { ok "$app (linked)"; continue; }
+        cp "$src" "$dst"
         ok "$app"
     done
     return 0
@@ -53,7 +57,10 @@ setup_hidden() {
 
     for file in "$APPS_DIR/hidden"/*.desktop; do
         [[ -f "$file" ]] || continue
-        cp "$file" "$TARGET_DIR/"
+        local dst="$TARGET_DIR/$(basename "$file")"
+        # Skip if already linked or same file
+        [[ "$file" -ef "$dst" ]] && continue
+        cp "$file" "$dst"
         ((count++))
     done
 
