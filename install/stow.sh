@@ -24,3 +24,4 @@ if stow -v . 2>&1 | grep -q "LINK"; then
 else
     stow . 2>/dev/null && ok "Dotfiles linked" || warn "Some conflicts - check manually"
 fi
+true

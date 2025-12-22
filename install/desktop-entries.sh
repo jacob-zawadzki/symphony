@@ -42,7 +42,7 @@ if command -v gum &>/dev/null && [[ -d "$APPS_DIR" ]]; then
     if [[ ${#webapps[@]} -gt 0 ]]; then
         echo
         if gum confirm "Install web apps?"; then
-            selected=$(printf '%s\n' "${webapps[@]}" | gum choose --no-limit --height 15)
+            selected=$(printf '%s\n' "${webapps[@]}" | gum choose --no-limit --height 15) || true
             for app in $selected; do
                 cp "$APPS_DIR/$app.desktop" "$TARGET_DIR/"
                 ok "$app"
@@ -52,5 +52,6 @@ if command -v gum &>/dev/null && [[ -d "$APPS_DIR" ]]; then
 fi
 
 # Refresh
-update-desktop-database "$TARGET_DIR" 2>/dev/null
-rm -f "$HOME/.cache/rofi"* 2>/dev/null
+update-desktop-database "$TARGET_DIR" 2>/dev/null || true
+rm -f "$HOME/.cache/rofi"* 2>/dev/null || true
+true

@@ -114,17 +114,19 @@ do_install() {
 		fi
 	done
 
-	[[ ${#official[@]} -gt 0 ]] && {
+	if [[ ${#official[@]} -gt 0 ]]; then
 		info "Installing ${#official[@]} packages..."
 		sudo pacman -S --needed --noconfirm "${official[@]}" &>/dev/null
 		for pkg in "${official[@]}"; do ok "$pkg"; done
-	}
+	fi
 
-	[[ ${#from_aur[@]} -gt 0 ]] && {
+	if [[ ${#from_aur[@]} -gt 0 ]]; then
 		info "Installing ${#from_aur[@]} from AUR..."
 		$aur -S --needed --noconfirm "${from_aur[@]}" &>/dev/null
 		for pkg in "${from_aur[@]}"; do ok "$pkg"; done
-	}
+	fi
+
+	return 0
 }
 
 ask_applications() {
@@ -132,11 +134,13 @@ ask_applications() {
 	echo
 	gum confirm "Install optional applications?" || return 0
 
-	local selected=$(printf '%s\n' "${applications[@]}" | gum choose --no-limit --height 20)
+	local selected
+	selected=$(printf '%s\n' "${applications[@]}" | gum choose --no-limit --height 20) || return 0
 	[[ -z "$selected" ]] && return 0
 
 	step "Installing applications"
 	do_install $selected
+	return 0
 }
 
 # ╭───────────────────────────────────────────────────────────────────────╮
@@ -147,3 +151,4 @@ step "Installing packages"
 setup_aur
 do_install "${packages[@]}"
 ask_applications
+true
