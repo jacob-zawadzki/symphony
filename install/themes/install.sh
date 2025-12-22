@@ -60,10 +60,10 @@ spin() {
 	local msg="$1"
 	shift
 	if [[ $HAS_GUM -eq 1 ]]; then
-		gum spin --spinner dot --spinner.foreground="218" --title.foreground="245" --title "  $msg" -- "$@" 2>/dev/null
+		gum spin --spinner dot --spinner.foreground="218" --title.foreground="245" --title "  $msg" -- "$@" 2>/dev/null || true
 	else
 		echo -e "${C_DIM}  ○ $msg${C_RESET}"
-		"$@" >/dev/null 2>&1
+		"$@" >/dev/null 2>&1 || true
 	fi
 }
 
@@ -259,7 +259,7 @@ page_two() {
 		local i=1
 		for t in "${themes[@]}"; do
 			echo -e "  ${C_DIM}$i)${C_RESET} $t"
-			((i++))
+			i=$((i + 1))
 		done
 		echo
 		read -rp "  Enter number or name: " choice
