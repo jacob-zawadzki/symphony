@@ -11,6 +11,8 @@ configuration {
     font: "CaskaydiaCove Nerd Font Mono 11";
 }
 
+/* @import "colors.rasi" */
+
 * {
     background: rgba(0, 0, 0, 0);
     background-alt: rgba(0, 0, 0, 0);

@@ -1,6 +1,16 @@
 *.bak
-# *colors.css
+
+# Runtime symlinks created by symphony hooks
 .config/waybar/colors.css
+.config/rofi/colors.rasi
+.config/yazi/theme.toml
+.config/btop/themes/current.theme
+.config/rmpc/themes/current.ron
+.config/rmpc/themes/pywall16.ron
+.config/gtk-3.0/bookmarks
+.config/gtk-4.0/bookmarks
+# Theme wallpaper symlinks (user preference, changes frequently)
+themes/*/wallpaper
 
 .config/tmux/plugins
 
