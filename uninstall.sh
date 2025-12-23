@@ -172,6 +172,8 @@ if [[ "$1" == "--desktop-entries" ]]; then
     exit 0
 fi
 
+clear
+show_banner
 echo
 warn "Symphony Uninstaller"
 echo
