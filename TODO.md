@@ -7,9 +7,9 @@
         |___/                                  |___/              
 ```
 
-**Status**: Ready for Release  
-**Current**: v2.0.0 (pending)  
-**Previous**: [v1.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v1.0.0)
+**Status**: Released  
+**Current**: [v2.0.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v2.0.0)  
+**Previous**: [v1.0.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v1.0.0)
 
 ---
 
