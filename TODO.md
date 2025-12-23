@@ -7,84 +7,43 @@
         |___/                                  |___/              
 ```
 
-**Status**: ✅ Ready for Release  
-**Current**: v2.0.0 (pending release)  
+**Status**: Ready for Release  
+**Current**: v2.0.0 (pending)  
 **Previous**: [v1.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v1.0.0)
 
 ---
 
-## 🎨 Theme Integration
+## Remaining
 
-**Core Applications**
+**Theme Support**
+- [ ] Spicetify integration
 
-- [x] Rofi
-- [x] RMPC
-- [x] Yazi
-- [x] Btop
-- [x] Starship
-- [x] GTK
-- [x] SwayNC
-- [x] Cava
-- [x] Hypr borders
-- [x] Waybar
-
-**Terminals**
-
-- [x] Kitty
-- [x] Ghostty
-- [x] Alacritty
-
-**Secondary**
-
-- [x] Firefox
-- [x] Vesktop
-- [x] Obsidian
-- [ ] Spicetify
-
----
-
-## 🔧 Scripts & Tools
-
-- [x] Theme switcher (`symphony` command)
-- [x] fish aliases → abbr
-- [x] Theme installer script
-- [x] Full installation script (modular: utils, checks, pkgs, dotfiles)
-- [x] Better directory structure (install/, themes/, scripts/)
-- [x] One-liner curl install (`boot.sh`)
-- [x] Uninstaller script
-- [x] Desktop entries & web apps
-- [x] MPD service setup
-- [x] Dynamic app hiding
+**Features**
+- [ ] Neovim cleanup & hot reload
 - [ ] Media conversion scripts
-- [ ] Optimize switching performance
+- [ ] Optimize theme switching performance
 
----
-
-## ✨ Features
-
-- [x] Focus-vibe mode (Kitty/Ghostty/Alacritty toggle transparency)
-- [ ] Neovim cleanup
-- [ ] Neovim hot reload
-
----
-
-## 🎯 Polish
-
-- [x] Symphony branding (all files)
-- [x] Better directory structure
-- [x] Stow-local-ignore for clean symlinks
-- [x] GitHub issue templates
+**Polish**
+- [ ] README video/screenshots
+- [ ] Symphony website
 - [ ] ASCII art headers
 - [ ] Full cleanup pass
 
 ---
 
-## 📚 Documentation
+## Completed in 2.0
 
-- [x] Main README (updated with new install flow)
-- [x] Themes & Scripts README
-- [ ] README video/screenshots
-- [ ] Symphony Website
+- One-liner install (`curl | bash`)
+- Modular installer (packages, stow, services, desktop entries)
+- `symphony` command (switch, list, current, edit, reload)
+- Hook-based theme system
+- New themes: espresso, kanagawa, nordic
+- Terminal transparency toggle
+- Web apps & browser hardware acceleration
+- Dynamic app hiding
+- MPD service setup
+- GitHub issue templates
+- Full theme support: terminals, GTK, waybar, rofi, btop, cava, vesktop, obsidian, firefox
 
 ---
 
