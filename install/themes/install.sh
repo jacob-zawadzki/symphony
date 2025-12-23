@@ -217,11 +217,11 @@ page_two() {
     echo "$theme" > "$SYMPHONY_DIR/.current-theme"
 
     if [[ -x "$SCRIPT_DIR/symphony" ]]; then
-        spin "Switching to $theme" 1.0
-        "$SCRIPT_DIR/symphony" switch "$theme" &>/dev/null || true
-        check_mark "Theme applied"
-        check_mark "Wallpaper set"
-        check_mark "Applications reloaded"
+        "$SCRIPT_DIR/symphony" switch "$theme" && {
+            check_mark "Theme applied"
+            check_mark "Wallpaper set"
+            check_mark "Applications reloaded"
+        } || warn "Theme switch had issues (normal on first install)"
     else
         cross_mark "symphony not found"
     fi

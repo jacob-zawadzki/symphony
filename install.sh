@@ -44,6 +44,9 @@ source "$DOTFILES/install/stow.sh"
 # Setup desktop entries
 source "$DOTFILES/install/desktop-entries.sh"
 
+# Enable user services
+source "$DOTFILES/install/services.sh"
+
 # Install themes (skip logo since we already showed banner)
 SYMPHONY_INSTALLING=1 "$DOTFILES/install/themes/install.sh"
 
