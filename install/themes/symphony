@@ -11,7 +11,6 @@
 
 set -e
 
-# Paths (auto-detect from script location)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$(dirname "$(dirname "$SCRIPT_DIR")")"
 THEMES_DIR="$DOTFILES/themes"
@@ -20,41 +19,45 @@ SYMPHONY_DIR="$HOME/.config/symphony"
 CURRENT_LINK="$SYMPHONY_DIR/current"
 THEME_FILE="$SYMPHONY_DIR/.current-theme"
 
-VERSION="2.0.0"
+VERSION="2.1.0"
 
-# Colors
-RED='\033[0;31m' GREEN='\033[0;32m' YELLOW='\033[0;33m'
-BLUE='\033[0;34m' CYAN='\033[0;36m' RESET='\033[0m'
+# colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+RESET='\033[0m'
 
-ok() { echo -e "${GREEN}[OK]${RESET} $1"; }
-err() { echo -e "${RED}[ERROR]${RESET} $1" >&2; }
+ok()   { echo -e "${GREEN}[OK]${RESET} $1"; }
+err()  { echo -e "${RED}[ERROR]${RESET} $1" >&2; }
 info() { echo -e "${BLUE}[INFO]${RESET} $1"; }
-skip() { echo -e "${CYAN}[SKIP]${RESET} $1"; }
 
-notify() { command -v notify-send &>/dev/null && notify-send "$1" "$2" ${3:+-i "$3"}; }
+notify() {
+	command -v notify-send &>/dev/null && notify-send "$1" "$2" ${3:+-i "$3"}
+}
 
-current_theme() { cat "$THEME_FILE" 2>/dev/null || echo "dynamic"; }
-theme_exists() { [[ -d "$THEMES_DIR/$1" ]]; }
+current_theme() {
+	cat "$THEME_FILE" 2>/dev/null || echo "dynamic"
+}
+
+theme_exists() {
+	[[ -d "$THEMES_DIR/$1" ]]
+}
 
 list_themes() {
-	local dynamic=() static=()
 	for dir in "$THEMES_DIR"/*/; do
-		local name=$(basename "$dir")
-		[[ "$name" == "Wallpapers" ]] && continue
-		if [[ "$name" == "dynamic" || -f "$dir/.config/fuzzel/fuzzel_theme.ini" ]]; then
-			dynamic+=("$name")
-		else
-			static+=("$name")
-		fi
-	done
-	printf '%s\n' "${dynamic[@]}" "${static[@]}" | sort -u
+		local name
+		name=$(basename "$dir")
+		[[ "$name" != "Wallpapers" ]] && echo "$name"
+	done | sort -u
 }
 
 run_hooks() {
 	echo "Running hooks..."
 	for hook in "$HOOKS_DIR"/*.sh; do
 		[[ -x "$hook" ]] || chmod +x "$hook"
-		local name=$(basename "$hook" .sh)
+		local name
+		name=$(basename "$hook" .sh)
 		if CURRENT_LINK="$CURRENT_LINK" THEMES_DIR="$THEMES_DIR" bash "$hook" 2>/dev/null; then
 			echo -e "  ${GREEN}✓${RESET} ${name#*-}"
 		else
@@ -65,7 +68,8 @@ run_hooks() {
 
 set_wallpaper() {
 	local theme="$1"
-	local wall=$(find "$THEMES_DIR/$theme/backgrounds" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | sort | head -1)
+	local wall
+	wall=$(find "$THEMES_DIR/$theme/backgrounds" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | sort | head -1)
 	[[ -z "$wall" ]] && return
 
 	swww query &>/dev/null || {
@@ -73,15 +77,19 @@ set_wallpaper() {
 		sleep 0.3
 	}
 	swww img "$wall" --transition-type center --transition-fps 120 --transition-duration 1
-	local file=$(basename "$wall")
-	ln -sfn "backgrounds/$file" "$THEMES_DIR/$theme/wallpaper"
+	ln -sfn "backgrounds/$(basename "$wall")" "$THEMES_DIR/$theme/wallpaper"
 }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# commands
+# ═══════════════════════════════════════════════════════════════════════════════
 
 cmd_switch() {
 	local theme="$1"
 
 	if [[ -z "$theme" ]]; then
-		local themes=$(list_themes)
+		local themes
+		themes=$(list_themes)
 		if command -v rofi &>/dev/null; then
 			theme=$(echo "$themes" | rofi -dmenu -i -p "Theme" -config "$HOME/.config/rofi/config.rasi") || exit 0
 		elif command -v fzf &>/dev/null; then
@@ -103,11 +111,10 @@ cmd_switch() {
 	}
 
 	info "Switching to $theme..."
-
 	hyprctl keyword misc:disable_autoreload 1 &>/dev/null || true
 
 	mkdir -p "$SYMPHONY_DIR"
-	echo "$theme" >"$THEME_FILE"
+	echo "$theme" > "$THEME_FILE"
 	ln -sfn "$THEMES_DIR/$theme" "$CURRENT_LINK"
 
 	run_hooks
@@ -120,7 +127,8 @@ cmd_switch() {
 }
 
 cmd_reload() {
-	local theme=$(current_theme)
+	local theme
+	theme=$(current_theme)
 	info "Reloading $theme..."
 
 	mkdir -p "$SYMPHONY_DIR"
@@ -133,22 +141,9 @@ cmd_reload() {
 	ok "Reloaded $theme"
 }
 
-cmd_fix() {
-	info "Fixing symlinks..."
-	local theme=$(current_theme)
-	theme_exists "$theme" || {
-		err "Theme '$theme' not found"
-		exit 1
-	}
-
-	mkdir -p "$SYMPHONY_DIR"
-	ln -sfn "$THEMES_DIR/$theme" "$CURRENT_LINK"
-	run_hooks
-	ok "Fixed $theme"
-}
-
 cmd_list() {
-	local current=$(current_theme)
+	local current
+	current=$(current_theme)
 	echo ""
 	for theme in $(list_themes); do
 		if [[ "$theme" == "$current" ]]; then
@@ -162,29 +157,299 @@ cmd_list() {
 
 cmd_remove() {
 	local theme="$1"
-	[[ -z "$theme" ]] && {
-		err "Usage: symphony remove <theme>"
-		exit 1
-	}
-	theme_exists "$theme" || {
-		err "Not found: $theme"
-		exit 1
-	}
-	[[ "$theme" == "dynamic" ]] && {
-		err "Can't remove dynamic theme"
-		exit 1
-	}
-	[[ "$theme" == "$(current_theme)" ]] && {
-		err "Can't remove active theme"
-		exit 1
-	}
+	[[ -z "$theme" ]] && { err "Usage: symphony remove <theme>"; exit 1; }
+	theme_exists "$theme" || { err "Not found: $theme"; exit 1; }
+	[[ "$theme" == "dynamic" ]] && { err "Can't remove dynamic theme"; exit 1; }
+	[[ "$theme" == "$(current_theme)" ]] && { err "Can't remove active theme"; exit 1; }
 
-	read -rp "Delete $theme? (yes/no): " confirm
-	[[ "$confirm" == "yes" ]] && {
-		rm -rf "$THEMES_DIR/$theme"
+	printf 'Delete %s? [y/N] ' "$theme"
+	read -r confirm
+	[[ "$confirm" == "y" ]] && {
+		rm -rf "${THEMES_DIR:?}/$theme"
 		ok "Removed $theme"
 	}
 }
+
+cmd_fix() {
+	local theme
+	theme=$(current_theme)
+	info "Fixing symlinks..."
+	theme_exists "$theme" || { err "Theme '$theme' not found"; exit 1; }
+
+	mkdir -p "$SYMPHONY_DIR"
+	ln -sfn "$THEMES_DIR/$theme" "$CURRENT_LINK"
+	run_hooks
+	ok "Fixed $theme"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# import - install omarchy themes from github
+# ═══════════════════════════════════════════════════════════════════════════════
+
+import_palette() {
+	local src="$1"
+
+	# kitty
+	if [[ -f "$src/kitty.conf" ]]; then
+		local bg fg
+		bg=$(awk '/^background / {print $2}' "$src/kitty.conf")
+		fg=$(awk '/^foreground / {print $2}' "$src/kitty.conf")
+		[[ $bg && $fg ]] || return 1
+		printf '%s %s ' "$bg" "$fg"
+		for i in {0..15}; do
+			awk "/^color$i / {print \$2}" "$src/kitty.conf" | head -1
+		done | tr '\n' ' '
+		return 0
+	fi
+
+	# alacritty
+	if [[ -f "$src/alacritty.toml" ]]; then
+		local bg fg
+		bg=$(sed -n "/\[colors.primary\]/,/\[/{s/.*background.*=['\"]\([^'\"]*\).*/\1/p;}" "$src/alacritty.toml")
+		fg=$(sed -n "/\[colors.primary\]/,/\[/{s/.*foreground.*=['\"]\([^'\"]*\).*/\1/p;}" "$src/alacritty.toml")
+		[[ $bg && $fg ]] || return 1
+		printf '%s %s ' "$bg" "$fg"
+		for section in normal bright; do
+			for color in black red green yellow blue magenta cyan white; do
+				sed -n "/\[colors.$section\]/,/\[/{s/.*$color.*=['\"]\([^'\"]*\).*/\1/p;}" "$src/alacritty.toml"
+			done
+		done | tr '\n' ' '
+		return 0
+	fi
+
+	return 1
+}
+
+import_generate() {
+	local name="$1" dest="$2" bg="$3" fg="$4"
+	shift 4
+	local c=("$@")
+
+	# kitty
+	cat > "$dest/.config/kitty/colors.conf" <<-EOF
+	background $bg
+	foreground $fg
+	cursor none
+	selection_background ${c[6]:-$fg}
+	selection_foreground $bg
+	color0  ${c[0]:-$bg}
+	color1  ${c[1]:-#cc6666}
+	color2  ${c[2]:-#b5bd68}
+	color3  ${c[3]:-#f0c674}
+	color4  ${c[4]:-#81a2be}
+	color5  ${c[5]:-#b294bb}
+	color6  ${c[6]:-#8abeb7}
+	color7  ${c[7]:-#c5c8c6}
+	color8  ${c[8]:-#969896}
+	color9  ${c[9]:-#cc6666}
+	color10 ${c[10]:-#b5bd68}
+	color11 ${c[11]:-#f0c674}
+	color12 ${c[12]:-#81a2be}
+	color13 ${c[13]:-#b294bb}
+	color14 ${c[14]:-#8abeb7}
+	color15 ${c[15]:-#ffffff}
+	active_border_color ${c[4]:-$fg}
+	inactive_border_color ${c[8]:-#444444}
+	EOF
+
+	# alacritty
+	cat > "$dest/.config/alacritty/colors.toml" <<-EOF
+	[colors.primary]
+	background = '$bg'
+	foreground = '$fg'
+	[colors.normal]
+	black = '${c[0]:-$bg}'
+	red = '${c[1]:-#cc6666}'
+	green = '${c[2]:-#b5bd68}'
+	yellow = '${c[3]:-#f0c674}'
+	blue = '${c[4]:-#81a2be}'
+	magenta = '${c[5]:-#b294bb}'
+	cyan = '${c[6]:-#8abeb7}'
+	white = '${c[7]:-#c5c8c6}'
+	[colors.bright]
+	black = '${c[8]:-#969896}'
+	red = '${c[9]:-#cc6666}'
+	green = '${c[10]:-#b5bd68}'
+	yellow = '${c[11]:-#f0c674}'
+	blue = '${c[12]:-#81a2be}'
+	magenta = '${c[13]:-#b294bb}'
+	cyan = '${c[14]:-#8abeb7}'
+	white = '${c[15]:-#ffffff}'
+	EOF
+
+	# ghostty
+	cat > "$dest/.config/ghostty/theme" <<-EOF
+	background = $bg
+	foreground = $fg
+	palette = 0=${c[0]:-$bg}
+	palette = 1=${c[1]:-#cc6666}
+	palette = 2=${c[2]:-#b5bd68}
+	palette = 3=${c[3]:-#f0c674}
+	palette = 4=${c[4]:-#81a2be}
+	palette = 5=${c[5]:-#b294bb}
+	palette = 6=${c[6]:-#8abeb7}
+	palette = 7=${c[7]:-#c5c8c6}
+	palette = 8=${c[8]:-#969896}
+	palette = 9=${c[9]:-#cc6666}
+	palette = 10=${c[10]:-#b5bd68}
+	palette = 11=${c[11]:-#f0c674}
+	palette = 12=${c[12]:-#81a2be}
+	palette = 13=${c[13]:-#b294bb}
+	palette = 14=${c[14]:-#8abeb7}
+	palette = 15=${c[15]:-#ffffff}
+	EOF
+
+	# hyprland
+	local accent="${c[4]:-$fg}"
+	cat > "$dest/.config/hypr/theme/colors.conf" <<-EOF
+	\$activeBorderColor = rgba(${accent#\#}ff)
+	general { col.active_border = \$activeBorderColor }
+	group { col.border_active = \$activeBorderColor }
+	EOF
+
+	# waybar
+	cat > "$dest/.config/waybar/colors.css" <<-EOF
+	@define-color background $bg;
+	@define-color foreground $fg;
+	@define-color color4 ${c[4]:-#81a2be};
+	@define-color color8 ${c[8]:-#969896};
+	EOF
+
+	# rofi
+	cat > "$dest/.config/rofi/colors.rasi" <<-EOF
+	* {
+	    background: $bg;
+	    foreground: $fg;
+	    primary: ${c[4]:-#81a2be};
+	    urgent: ${c[1]:-#cc6666};
+	}
+	EOF
+
+	# gtk
+	cat > "$dest/.config/gtk-3.0/colors.css" <<-EOF
+	@define-color accent_bg_color ${c[4]:-#81a2be};
+	@define-color accent_color ${c[4]:-#81a2be};
+	@define-color window_bg_color $bg;
+	@define-color window_fg_color $fg;
+	EOF
+	cp "$dest/.config/gtk-3.0/colors.css" "$dest/.config/gtk-4.0/colors.css"
+
+	# btop
+	cat > "$dest/.config/btop/themes/current.theme" <<-EOF
+	theme[main_bg]="$bg"
+	theme[main_fg]="$fg"
+	theme[title]="${c[7]:-#c5c8c6}"
+	theme[selected_bg]="${c[8]:-#444444}"
+	theme[selected_fg]="${c[15]:-#ffffff}"
+	theme[inactive_fg]="${c[8]:-#969896}"
+	theme[cpu_box]="${c[4]:-#81a2be}"
+	theme[mem_box]="${c[4]:-#81a2be}"
+	theme[net_box]="${c[4]:-#81a2be}"
+	theme[proc_box]="${c[4]:-#81a2be}"
+	theme[div_line]="${c[8]:-#444444}"
+	theme[cpu_start]="${c[2]:-#b5bd68}"
+	theme[cpu_mid]="${c[3]:-#f0c674}"
+	theme[cpu_end]="${c[1]:-#cc6666}"
+	EOF
+
+	# cava
+	cat > "$dest/.config/cava/config" <<-EOF
+	[color]
+	gradient = 1
+	gradient_count = 4
+	gradient_color_1 = '${c[4]:-#81a2be}'
+	gradient_color_2 = '${c[5]:-#b294bb}'
+	gradient_color_3 = '${c[6]:-#8abeb7}'
+	gradient_color_4 = '${c[2]:-#b5bd68}'
+	EOF
+
+	# wal
+	cat > "$dest/.cache/wal/colors.json" <<-EOF
+	{"special":{"background":"$bg","foreground":"$fg","cursor":"${c[6]:-$fg}"}}
+	EOF
+
+	# yazi
+	cat > "$dest/.config/yazi/theme.toml" <<-EOF
+	[mgr]
+	cwd = { fg = "$fg" }
+	tab_active = { fg = "$bg", bg = "${c[4]:-#81a2be}" }
+	tab_inactive = { fg = "${c[7]:-#c5c8c6}", bg = "${c[8]:-#444444}" }
+	border_style = { fg = "${c[4]:-#81a2be}" }
+	EOF
+}
+
+cmd_import() {
+	local url="$1"
+	[[ -z "$url" ]] && { err "Usage: symphony import <github-url|user/repo>"; exit 1; }
+
+	# normalize url
+	[[ "$url" =~ ^https?:// ]] || url="https://github.com/$url"
+	url="${url%.git}"
+
+	# derive name
+	local name
+	name=$(basename "$url" | sed 's/^omarchy-//; s/^omakub-//; s/-theme$//; s/-omarchy$//' | tr '[:upper:]' '[:lower:]')
+	local dest="$THEMES_DIR/$name"
+
+	# check existing
+	if [[ -d "$dest" ]]; then
+		printf 'Theme "%s" exists. Overwrite? [y/N] ' "$name"
+		read -r ans
+		[[ "$ans" == "y" ]] || exit 0
+		rm -rf "$dest"
+	fi
+
+	# clone
+	local tmp="/tmp/symphony-import.$$"
+	trap 'rm -rf "$tmp"' EXIT
+	info "Cloning $url..."
+	mkdir -p "$tmp"
+	git clone --depth 1 --quiet "$url" "$tmp/repo" || { err "Clone failed"; exit 1; }
+	local src="$tmp/repo"
+
+	# extract palette
+	info "Extracting palette..."
+	local colors
+	colors=$(import_palette "$src") || { err "No kitty.conf or alacritty.toml found"; exit 1; }
+	read -ra C <<< "$colors"
+	local bg="${C[0]}" fg="${C[1]}"
+	local pal=("${C[@]:2}")
+
+	# create structure
+	info "Creating $name..."
+	mkdir -p "$dest"/{backgrounds,.cache/wal}
+	mkdir -p "$dest/.config"/{alacritty,btop/themes,cava,ghostty,gtk-3.0,gtk-4.0,hypr/theme,kitty,nvim,rofi,waybar,yazi}
+
+	# copy backgrounds
+	if [[ -d "$src/backgrounds" ]]; then
+		cp "$src/backgrounds"/* "$dest/backgrounds/" 2>/dev/null || true
+	fi
+	for ext in jpg png webp; do
+		for f in "$src"/background*."$ext"; do
+			[[ -f "$f" ]] && cp "$f" "$dest/backgrounds/"
+		done
+	done
+
+	# set wallpaper symlink
+	local wall
+	wall=$(find "$dest/backgrounds" -type f 2>/dev/null | head -1)
+	[[ -n "$wall" ]] && ln -sfn "backgrounds/${wall##*/}" "$dest/wallpaper"
+
+	# generate configs
+	import_generate "$name" "$dest" "$bg" "$fg" "${pal[@]}"
+
+	# prefer original configs if present
+	[[ -f "$src/btop.theme" ]] && cp "$src/btop.theme" "$dest/.config/btop/themes/current.theme"
+	[[ -f "$src/waybar.css" ]] && cp "$src/waybar.css" "$dest/.config/waybar/colors.css"
+	[[ -f "$src/neovim.lua" ]] && cp "$src/neovim.lua" "$dest/.config/nvim/theme.lua"
+
+	ok "Imported $name"
+	cmd_switch "$name"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# help
+# ═══════════════════════════════════════════════════════════════════════════════
 
 cmd_help() {
 	cat <<'EOF'
@@ -201,27 +466,21 @@ cmd_help() {
 Usage: symphony <command> [options]
 
 Commands:
-  switch [theme]    Switch theme (menu if no name given)
-  list              Show all themes  
-  current           Print current theme
-  reload            Re-apply current theme
-  fix               Fix broken symlinks
-  remove [theme]    Delete a theme
-  uninstall         Remove Symphony
-  help              This help
-  version           Version info
+  switch [theme]     Switch theme (menu if no name given)
+  import <url>       Import Omarchy theme from GitHub
+  list               Show all themes
+  current            Print current theme
+  reload             Re-apply current theme
+  fix                Fix broken symlinks
+  remove <theme>     Delete a theme
+  help               This help
+  version            Version info
 
-Keybindings:
-  SUPER+CTRL+SHIFT+SPACE    Theme switcher
-  SUPER+CTRL+SPACE          Matugen theme from wallpaper
-  SUPER+ALT+SPACE           Wallpaper picker
-  SUPER+ALT+LEFT/RIGHT      Cycle wallpapers
-  SUPER+BACKSPACE           Toggle terminal transparency
-  SUPER+CTRL+BACKSPACE      Toggle focus/vibe mode
-  SUPER+K                   Show all keybindings
-
-Tip:
-  Waybar brightness icon: left-click for Random wallpaper picker, right-click to apply random wallpaper
+Examples:
+  symphony switch
+  symphony switch tokyo-night
+  symphony import bjarneo/omarchy-sakura-theme
+  symphony import https://github.com/user/omarchy-theme
 
 EOF
 	echo "  Found a problem? https://github.com/vyrx-dev/dotfiles/issues/new"
@@ -241,33 +500,23 @@ cmd_version() {
 EOF
 	echo ""
 	echo "  Symphony v$VERSION"
-	echo "  Author: vyrx"
 	echo "  https://github.com/vyrx-dev/dotfiles"
 }
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# main
+# ═══════════════════════════════════════════════════════════════════════════════
+
 case "${1:-help}" in
-switch)
-	shift
-	cmd_switch "$@"
-	;;
-reload) cmd_reload ;;
-fix) cmd_fix ;;
-list | ls) cmd_list ;;
-current)
-	echo ""
-	echo -e "  ${GREEN}●${RESET} $(current_theme)"
-	"$DOTFILES/scripts/fetch-colors" 2>/dev/null || true
-	;;
-remove | rm)
-	shift
-	cmd_remove "$@"
-	;;
-uninstall) "$SCRIPT_DIR/uninstall.sh" ;;
-help | -h) cmd_help ;;
-version | -v) cmd_version ;;
-*)
-	err "Unknown: $1"
-	echo "Try: symphony help"
-	exit 1
-	;;
+	switch)          shift; cmd_switch "$@" ;;
+	import)          shift; cmd_import "$@" ;;
+	reload)          cmd_reload ;;
+	fix)             cmd_fix ;;
+	list|ls)         cmd_list ;;
+	current)         echo ""; echo -e "  ${GREEN}●${RESET} $(current_theme)"; "$DOTFILES/scripts/fetch-colors" 2>/dev/null || true ;;
+	remove|rm)       shift; cmd_remove "$@" ;;
+	uninstall)       "$SCRIPT_DIR/uninstall.sh" ;;
+	help|-h|--help)  cmd_help ;;
+	version|-v)      cmd_version ;;
+	*)               err "Unknown: $1"; echo "Try: symphony help"; exit 1 ;;
 esac
