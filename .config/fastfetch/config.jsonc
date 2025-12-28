@@ -58,11 +58,11 @@
       "type": "packages",
       "key": "│ {#33}󰏖 apps    {#keys}│"
     },
-    {
-      "key": "│ {#33}󰍛 cpu     {#keys}│",
-      "type": "cpu",
-      "showPeCoreCount": true
-    },
+    // {
+    //   "key": "│ {#33}󰍛 cpu     {#keys}│",
+    //   "type": "cpu",
+    //   "showPeCoreCount": true
+    // },
     {
       "key": "│ {#34}󰉉 disk    {#keys}│",
       "type": "disk",
@@ -75,13 +75,12 @@
     {
       "type": "terminalfont",
       "key": "│ {#35} font    {#keys}│",
-      "keyColor": "green"
     },
-    // {
-    //   "type": "command",
-    //   "key": "│ {#33}󱦟 OS Age  {#keys}│ ",
-    //   "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
-    // },
+    {
+      "type": "command",
+      "key": "│ {#33}󱦟 OS Age  {#keys}│",
+      "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+    },
     {
       "key": "├───────────┤",
       "type": "custom"
