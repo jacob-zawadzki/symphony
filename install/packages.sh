@@ -43,10 +43,10 @@ packages=(
 	pamixer pavucontrol wiremix
 
 	# Music
-	mpd mpc rmpc cava playerctl
+	mpd mpc rmpc cava playerctl mpdscribble
 
 	# Network & Bluetooth
-	networkmanager network-manager-applet impala
+	networkmanager network-manager-applet impala kdeconnect
 	bluez bluez-utils blueberry
 
 	# System

@@ -149,9 +149,9 @@
         ),
     ],
     cava: (
-        bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'],
-        bar_width: 2,
-        bar_spacing: 1,
+        bar_symbols: ['⣀', '⣤', '⣶', '⣿'],
+        bar_width: 1,
+        bar_spacing: 0,
         orientation: Bottom,
         bar_color: Gradient({
               0: "#6B578F",

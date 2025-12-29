@@ -165,10 +165,10 @@
          name: "Find",
          pane: Pane(Search),
         ),
-        (
-         name: "Lists",
-         pane: Pane(Playlists),
-        ),
+         (
+          name: "Lists",
+          pane: Pane(Playlists),
+         ),
         (
          name: "Dir",
          pane: Pane(Directories),
