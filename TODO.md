@@ -8,8 +8,8 @@
 ```
 
 **Status**: Released  
-**Current**: [v2.0.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v2.0.0)  
-**Previous**: [v1.0.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v1.0.0)
+**Current**: [v2.1.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v2.1.0)  
+**Previous**: [v2.0.0](https://github.com/vyrx-dev/dotfiles/releases/tag/v2.0.0)
 
 ---
 
@@ -21,6 +21,7 @@
 - [x] Btop / Cava / Yazi
 - [x] RMPC / Starship
 - [x] Vesktop / Obsidian / Firefox
+- [ ] QT Theming (kvantum/qt5ct)
 - [ ] Spicetify
 
 ---
@@ -32,6 +33,8 @@
 - [x] Interactive package selection
 - [x] Desktop entries & web apps
 - [x] MPD service setup
+- [x] mpdscribble (Last.fm) setup
+- [x] Gnome-keyring auto-setup
 - [x] Uninstaller
 
 ---
@@ -47,22 +50,33 @@
 
 ---
 
+## RMPC
+
+- [x] Lyrics pane with auto-fetch
+- [x] Cava visualizer integration
+- [x] Desktop notifications
+- [x] Last.fm scrobbling
+
+---
+
 ## Polish
 
 - [x] Symphony branding
 - [x] Stow-local-ignore
 - [x] GitHub issue templates
 - [x] README video/screenshots
+- [x] Graceful shutdown/reboot
 - [ ] Full cleanup pass
 
 ---
 
 ## Backlog
 
+- [ ] QT theming (kvantum/qt5ct)
 - [ ] Neovim cleanup & hot reload
 - [ ] Media conversion scripts
 - [ ] Symphony website
 
 ---
 
-*Last updated: December 24, 2025*
+*Last updated: December 29, 2025*
