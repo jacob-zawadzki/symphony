@@ -32,27 +32,27 @@
 @define-color view_fg_color #FFFFFF;
 
 /* Sidebar colors */
-@define-color sidebar_bg_color #382952;
+@define-color sidebar_bg_color #191520;
 @define-color sidebar_fg_color #FFFFFF;
 @define-color sidebar_backdrop_color #05010C;
 @define-color sidebar_shade_color #05010C;
 
 /* Headerbar colors */
-@define-color headerbar_bg_color #382952;
+@define-color headerbar_bg_color #191520;
 @define-color headerbar_fg_color #FFFFFF;
 @define-color headerbar_backdrop_color #05010C;
 @define-color headerbar_shade_color #05010C;
 
 /* Card colors */
-@define-color card_bg_color #382952;
+@define-color card_bg_color #191520;
 @define-color card_fg_color #FFFFFF;
 
 /* Popover colors */
-@define-color popover_bg_color #382952;
+@define-color popover_bg_color #191520;
 @define-color popover_fg_color #FFFFFF;
 
 /* Dialog colors */
-@define-color dialog_bg_color #382952;
+@define-color dialog_bg_color #191520;
 @define-color dialog_fg_color #FFFFFF;
 
 /* Semantic status colors */

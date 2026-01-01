@@ -32,13 +32,13 @@
 @define-color view_fg_color #f0e4dc;
 
 /* Sidebar colors */
-@define-color sidebar_bg_color #1a1513;
+@define-color sidebar_bg_color #2e2927;
 @define-color sidebar_fg_color #f0e4dc;
 @define-color sidebar_backdrop_color #1a1513;
 @define-color sidebar_shade_color #1a1513;
 
 /* Headerbar colors */
-@define-color headerbar_bg_color #1a1513;
+@define-color headerbar_bg_color #2e2927;
 @define-color headerbar_fg_color #f0e4dc;
 @define-color headerbar_backdrop_color #1a1513;
 @define-color headerbar_shade_color #1a1513;
