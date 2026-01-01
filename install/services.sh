@@ -6,6 +6,14 @@
 
 step "Setting up services"
 
+# Disable tray applets (waybar handles bluetooth/network)
+for app in blueman nm-applet; do
+    [[ -f "/etc/xdg/autostart/${app}.desktop" ]] || continue
+    mkdir -p ~/.config/autostart
+    echo -e "[Desktop Entry]\nHidden=true" > ~/.config/autostart/${app}.desktop
+    ok "Disabled ${app} tray (waybar module used instead)"
+done
+
 # Set GTK dark theme via gsettings
 if command -v gsettings &>/dev/null; then
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
