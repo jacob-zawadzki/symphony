@@ -13,6 +13,14 @@ i=2; while [[ -d "$BACKUP_DIR" ]]; do BACKUP_DIR="$HOME/dotfiles-backup-$i"; ((i
 step "Linking dotfiles"
 cd "$DOTFILES"
 
+# Clean stale symlinks from older installs
+for f in "$HOME"/*; do
+    [[ -L "$f" ]] || continue
+    target="$(readlink "$f")"
+    # Remove symlinks to install scripts or root-level files that shouldn't be linked
+    [[ "$target" == dotfiles/install/* || "$target" == dotfiles/*.md || "$target" == dotfiles/*.sh ]] && rm "$f"
+done
+
 # Prevent stow from symlinking ~/.config itself
 mkdir -p "$HOME/.config" "$HOME/.local/share"
 
