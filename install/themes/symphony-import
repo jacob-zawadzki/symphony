@@ -20,6 +20,26 @@ info() { echo -e "${BLUE}[INFO]${RESET} $1"; }
 
 hex() { echo "${1#\#}"; }
 
+# Lighten a hex color by adding to RGB values
+lighten() {
+    local hex="${1#\#}" amt="${2:-20}"
+    local r=$((16#${hex:0:2})) g=$((16#${hex:2:2})) b=$((16#${hex:4:2}))
+    r=$((r + amt > 255 ? 255 : r + amt))
+    g=$((g + amt > 255 ? 255 : g + amt))
+    b=$((b + amt > 255 ? 255 : b + amt))
+    printf "#%02x%02x%02x" $r $g $b
+}
+
+# Darken a hex color by subtracting from RGB values
+darken() {
+    local hex="${1#\#}" amt="${2:-20}"
+    local r=$((16#${hex:0:2})) g=$((16#${hex:2:2})) b=$((16#${hex:4:2}))
+    r=$((r - amt < 0 ? 0 : r - amt))
+    g=$((g - amt < 0 ? 0 : g - amt))
+    b=$((b - amt < 0 ? 0 : b - amt))
+    printf "#%02x%02x%02x" $r $g $b
+}
+
 # ╭───────────────────────────────────────────────────────────────────────╮
 # │ Color Extraction                                                      │
 # ╰───────────────────────────────────────────────────────────────────────╯
@@ -88,9 +108,15 @@ write_configs() {
     local bblue=${c[12]:-$blue} bmagenta=${c[13]:-$magenta} bcyan=${c[14]:-$cyan}
     local bwhite=${c[15]:-#ffffff}
     local accent=$blue
+    
+    # Compute subtle elevated surface color for sidebar/cards
+    local surface=$(lighten "$bg" 20)
 
     # ── kitty ──
     cat > "$dest/.config/kitty/colors.conf" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
 background $bg
 foreground $fg
 selection_background $cyan
@@ -123,6 +149,10 @@ EOF
 
     # ── alacritty ──
     cat > "$dest/.config/alacritty/colors.toml" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 [colors.primary]
 background = '$bg'
 foreground = '$fg'
@@ -150,6 +180,10 @@ EOF
 
     # ── ghostty ──
     cat > "$dest/.config/ghostty/theme" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 background = $bg
 foreground = $fg
 palette = 0=$black
@@ -172,6 +206,10 @@ EOF
 
     # ── hyprland ──
     cat > "$dest/.config/hypr/theme/colors.conf" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 \$activeBorderColor = rgba($(hex "$accent")aa)
 general { col.active_border = \$activeBorderColor }
 group { col.border_active = \$activeBorderColor }
@@ -190,6 +228,10 @@ EOF
 
     # ── waybar ──
     cat > "$dest/.config/waybar/colors.css" <<EOF
+/* ╭─ ♪ Symphony ─╮
+   │  Generated   │
+   ╰──────────────╯ */
+
 @define-color waybar_accent rgba($(hex "$cyan" | sed 's/../0x& /g' | xargs printf '%d, %d, %d'), 0.20);
 @define-color waybar_accent_fg @on_background;
 @define-color on_background $bwhite;
@@ -199,6 +241,10 @@ EOF
 
     # ── rofi ──
     cat > "$dest/.config/rofi/colors.rasi" <<EOF
+/* ╭─ ♪ Symphony ─╮
+   │  Generated   │
+   ╰──────────────╯ */
+
 * {
     primary: $cyan;
     primary-container: $accent;
@@ -230,6 +276,10 @@ EOF
     # ── gtk ──
     local gtk_css="$dest/.config/gtk-3.0/colors.css"
     cat > "$gtk_css" <<EOF
+/* ╭─ ♪ Symphony ─╮
+   │  Generated   │
+   ╰──────────────╯ */
+
 @define-color background $bg;
 @define-color foreground $fg;
 @define-color black $black;
@@ -249,19 +299,19 @@ EOF
 @define-color window_fg_color $fg;
 @define-color view_bg_color $bg;
 @define-color view_fg_color $fg;
-@define-color sidebar_bg_color $bblack;
+@define-color sidebar_bg_color $surface;
 @define-color sidebar_fg_color $fg;
 @define-color sidebar_backdrop_color $bg;
 @define-color sidebar_shade_color $bg;
-@define-color headerbar_bg_color $bblack;
+@define-color headerbar_bg_color $surface;
 @define-color headerbar_fg_color $fg;
 @define-color headerbar_backdrop_color $bg;
 @define-color headerbar_shade_color $bg;
-@define-color card_bg_color $bblack;
+@define-color card_bg_color $surface;
 @define-color card_fg_color $fg;
-@define-color popover_bg_color $bblack;
+@define-color popover_bg_color $surface;
 @define-color popover_fg_color $fg;
-@define-color dialog_bg_color $bblack;
+@define-color dialog_bg_color $surface;
 @define-color dialog_fg_color $fg;
 @define-color destructive_bg_color $red;
 @define-color destructive_fg_color $bg;
@@ -297,25 +347,57 @@ EOF
 
     # ── btop ──
     cat > "$dest/.config/btop/themes/current.theme" <<EOF
+## ╭─ ♪ Symphony ─╮
+## │  Generated   │
+## ╰──────────────╯
+
 theme[main_bg]="$bg"
 theme[main_fg]="$fg"
-theme[title]="$white"
+theme[title]="$fg"
+theme[hi_fg]="$cyan"
 theme[selected_bg]="$bblack"
-theme[selected_fg]="$bwhite"
+theme[selected_fg]="$fg"
 theme[inactive_fg]="$bblack"
-theme[cpu_box]="$accent"
-theme[mem_box]="$accent"
-theme[net_box]="$accent"
-theme[proc_box]="$accent"
+theme[proc_misc]="$cyan"
+theme[cpu_box]="$bblack"
+theme[mem_box]="$bblack"
+theme[net_box]="$bblack"
+theme[proc_box]="$bblack"
 theme[div_line]="$bblack"
+theme[temp_start]="$green"
+theme[temp_mid]="$yellow"
+theme[temp_end]="$red"
 theme[cpu_start]="$green"
 theme[cpu_mid]="$yellow"
 theme[cpu_end]="$red"
+theme[free_start]="$green"
+theme[free_mid]="$yellow"
+theme[free_end]="$red"
+theme[cached_start]="$green"
+theme[cached_mid]="$yellow"
+theme[cached_end]="$red"
+theme[available_start]="$green"
+theme[available_mid]="$yellow"
+theme[available_end]="$red"
+theme[used_start]="$green"
+theme[used_mid]="$yellow"
+theme[used_end]="$red"
+theme[download_start]="$green"
+theme[download_mid]="$yellow"
+theme[download_end]="$red"
+theme[upload_start]="$green"
+theme[upload_mid]="$yellow"
+theme[upload_end]="$red"
 EOF
 
     # ── cava ──
     cat > "$dest/.config/cava/config" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 [color]
+background = 'default'
 gradient = 1
 gradient_count = 4
 gradient_color_1 = '$accent'
@@ -376,15 +458,75 @@ EOF
 
     # ── yazi ──
     cat > "$dest/.config/yazi/theme.toml" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 [mgr]
 cwd = { fg = "$fg" }
-tab_active = { fg = "$bg", bg = "$accent" }
-tab_inactive = { fg = "$white", bg = "$bblack" }
+
+find_keyword = { fg = "$cyan", bold = true, italic = true, underline = true }
+find_position = { fg = "$cyan", bold = true, italic = true }
+
+marker_copied = { fg = "$cyan", bg = "$cyan" }
+marker_cut = { fg = "$red", bg = "$red" }
+marker_marked = { fg = "$yellow", bg = "$yellow" }
+marker_selected = { fg = "$accent", bg = "$accent" }
+
+count_copied = { fg = "$bg", bg = "$cyan" }
+count_cut = { fg = "$bg", bg = "$red" }
+count_selected = { fg = "$bg", bg = "$accent" }
+
+border_symbol = " "
 border_style = { fg = "$accent" }
+
+[status]
+sep_left = { open = "", close = "🭠" }
+sep_right = { open = "🭁", close = "" }
+
+perm_type = { fg = "$accent" }
+perm_read = { fg = "$cyan" }
+perm_write = { fg = "$yellow" }
+perm_exec = { fg = "$red" }
+perm_sep = { fg = "$magenta" }
+
+progress_label = { bold = true }
+progress_normal = { fg = "$accent", bg = "$surface" }
+progress_error = { fg = "$red", bg = "$surface" }
+
+[mode]
+normal_main = { bg = "$accent", fg = "$bg", bold = true }
+normal_alt = { bg = "$surface", fg = "$fg" }
+
+select_main = { bg = "$magenta", fg = "$bg", bold = true }
+select_alt = { bg = "$surface", fg = "$fg" }
+
+unset_main = { bg = "$cyan", fg = "$bg", bold = true }
+unset_alt = { bg = "$surface", fg = "$fg" }
+
+[select]
+border = { fg = "$accent" }
+active = { fg = "$cyan", bold = true }
+
+[input]
+border = { fg = "$accent" }
+value = { fg = "$fg" }
+
+[tabs]
+active = { fg = "$accent", bold = true, bg = "$bg" }
+inactive = { fg = "$bblack", bg = "$bg" }
+sep_inner = { open = "[", close = "]" }
+
+[cmp]
+border = { fg = "$accent", bg = "$bg" }
 EOF
 
     # ── rmpc ──
     cat > "$dest/.config/rmpc/themes/current.ron" <<'RMPC_START'
+// ╭─ ♪ Symphony ─╮
+// │  Generated   │
+// ╰──────────────╯
+
 #![enable(implicit_some)]
 #![enable(unwrap_newtypes)]
 #![enable(unwrap_variant_newtypes)]
@@ -448,76 +590,121 @@ RMPC_START
 EOF
 
     # ── vesktop ──
+    local accent_hover=$(darken "$accent" 50)
+    local accent_click=$(darken "$accent" 25)
     cat > "$dest/.config/vesktop/themes/symphony-discord.css" <<EOF
+/* ╭─ ♪ Symphony ─╮
+   │  Generated   │
+   ╰──────────────╯
+
+   Based on midnight by refact0r
+   https://github.com/refact0r/midnight-discord */
+
 @import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+
 :root {
     --font: 'figtree';
     --corner-text: 'Symphony';
+
+    /* status indicators */
     --online-indicator: $green;
     --dnd-indicator: $red;
     --idle-indicator: $yellow;
     --streaming-indicator: $magenta;
-    --accent-1: $cyan;
-    --accent-2: $cyan;
+
+    /* accent colors */
+    --accent-1: $accent;
+    --accent-2: $accent;
     --accent-3: $accent;
-    --accent-4: $accent;
-    --accent-5: $accent;
-    --mention: $accent;
-    --mention-hover: $cyan;
+    --accent-4: $accent_hover;
+    --accent-5: $accent_click;
+    --mention: $accent_hover;
+    --mention-hover: $accent_click;
+
+    /* text colors */
     --text-0: $bg;
     --text-1: $fg;
     --text-2: $fg;
     --text-3: $white;
     --text-4: $bblack;
     --text-5: $bblack;
+
+    /* background colors */
     --bg-1: $black;
-    --bg-2: $bblack;
-    --bg-3: $bblack;
+    --bg-2: $surface;
+    --bg-3: $surface;
     --bg-4: $bg;
-    --hover: $bblack;
+    --hover: $surface;
     --active: $accent;
-    --message-hover: $bblack;
+    --message-hover: $surface;
+
+    /* corner roundness */
+    --roundness-xl: 22px;
+    --roundness-l: 20px;
+    --roundness-m: 16px;
+    --roundness-s: 12px;
+    --roundness-xs: 10px;
+    --roundness-xxs: 8px;
+
+    --discord-icon: none;
+    --moon-icon: block;
 }
+
 .selected_f5eb4b, .selected_f6f816 .link_d8bfb3 { color: var(--text-0) !important; background: var(--accent-3) !important; }
 .selected_f6f816 .link_d8bfb3 * { color: var(--text-0) !important; fill: var(--text-0) !important; }
 EOF
 
     # ── obsidian ──
     cat > "$dest/.config/obsidian/theme.css" <<EOF
+/* ╭─ ♪ Symphony ─╮
+   │  Generated   │
+   ╰──────────────╯ */
+
 .theme-dark, .theme-light {
     --background-primary: $bg;
-    --background-primary-alt: $black;
-    --background-secondary: $bblack;
-    --background-secondary-alt: $black;
-    --background-modifier-hover: $bblack;
+    --background-primary-alt: $surface;
+    --background-secondary: $surface;
+    --background-secondary-alt: $surface;
+    --background-modifier-hover: $surface;
     --background-modifier-border: $bblack;
+
     --text-normal: $fg;
     --text-muted: $white;
     --text-faint: $bblack;
     --text-on-accent: $bg;
+
     --interactive-accent: $accent;
     --interactive-accent-hover: $cyan;
     --text-accent: $accent;
     --text-accent-hover: $cyan;
+
     --link-color: $accent;
     --link-color-hover: $cyan;
     --link-external-color: $cyan;
-    --code-background: $black;
+
+    --code-background: $surface;
     --code-normal: $fg;
+
     --text-error: $red;
     --text-success: $green;
     --text-warning: $yellow;
+
     --divider-color: $bblack;
     --icon-color: $white;
     --icon-color-hover: $fg;
     --tag-color: $magenta;
-    --tag-background: $bblack;
+    --tag-background: $surface;
 }
+
 ::selection { background: ${accent}40; }
 EOF
 
     # ── starship ──
     cat > "$dest/.config/starship.toml" <<EOF
+# ╭─ ♪ Symphony ─╮
+# │  Generated   │
+# ╰──────────────╯
+
 add_newline = false
 command_timeout = 60
 format = "\$os \$directory \$git_branch\$git_status\$line_break\$character"

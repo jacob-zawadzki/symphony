@@ -1,8 +1,7 @@
 ## Symphony
 ## Author: vyrx
 ## Theme: Kanagawa
-
-# Inspired by Kanagawa.nvim
+## Inspired by Kanagawa.nvim
 
 # Main bg
 theme[main_bg]="#1f1f28"
