@@ -533,12 +533,10 @@ border = { fg = "$accent", bg = "$bg" }
 EOF
 
     # ── rmpc ──
-    cat > "$dest/.config/rmpc/themes/current.ron" <<'RMPC_START'
+    cat > "$dest/.config/rmpc/themes/current.ron" <<EOF
 // ╭─ ♪ Symphony ─╮
 // │  Generated   │
 // ╰──────────────╯
-RMPC_START
-    cat >> "$dest/.config/rmpc/themes/current.ron" <<EOF
 // Theme: Omarchy $name
 
 #![enable(implicit_some)]
@@ -549,8 +547,6 @@ RMPC_START
     show_song_table_header: false,
     draw_borders: true,
     browser_column_widths: [20, 38, 42],
-RMPC_START
-    cat >> "$dest/.config/rmpc/themes/current.ron" <<EOF
     text_color: "$fg",
     tab_bar: (
         enabled: true,
