@@ -1,37 +1,26 @@
+/* Power Profiles */
+
 @import "~/.config/rofi/config.rasi"
 
-/* Main config for power profiles - simple text list */
-
-/* ---- Window ---- */
 window {
-  width: 220px;
-  location: center;
-  anchor: center;
+  width: 200px;
 }
 
-/* ---- Mainbox ---- */
 mainbox {
+  padding: 12px;
   children: ["listview"];
-  padding: 15px;
 }
 
-/* ---- Listview ---- */
 listview {
   lines: 3;
-  spacing: 10px;
+  spacing: 6px;
 }
 
-/* ---- Element ---- */
 element {
-  padding: 10px 15px;
-  border-radius: 6px;
-}
-
-element-text {
-  horizontal-align: 0;
-  vertical-align: 0.5;
+  padding: 10px 14px;
+  border-radius: 8px;
 }
 
 element-icon {
-  size: 0px;
+  size: 0;
 }

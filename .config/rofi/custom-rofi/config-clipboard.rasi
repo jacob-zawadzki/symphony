@@ -1,51 +1,38 @@
-/* Clipboard Config - with image previews */
+/* Clipboard */
 
 @import "~/.config/rofi/config.rasi"
 
-/* ---- Window ---- */
 window {
-  // width: inherit;
-  width: 600px;
+  width: 540px;
 }
 
-/* ---- Mainbox ---- */
 mainbox {
-  children: [ "inputbar", "listview"];
   padding: 12px;
+  spacing: 10px;
+  children: [ "inputbar", "listview"];
 }
 
-/* ---- Inputbar ---- */
 inputbar {
-  margin: 0px 0px 8px 0px;
-  padding: 8px 12px;
+  margin: 0 100px;
 }
 
-/* ---- Entry ---- */
 entry {
-  placeholder: "Search clipboard...";
+  placeholder: "search";
 }
 
-/* ---- Listview ---- */
 listview {
   columns: 1;
   lines: 6;
   fixed-height: true;
-  spacing: 2px;
-  cycle: true;
+  spacing: 4px;
 }
 
-/* ---- Elements ---- */
 element {
   orientation: horizontal;
-  spacing: 8px;
-  padding: 4px 6px;
+  spacing: 10px;
+  padding: 6px 10px;
 }
 
 element-icon {
   size: 40px;
-}
-
-element-text {
-  horizontal-align: 0.0;
-  vertical-align: 0.5;
 }

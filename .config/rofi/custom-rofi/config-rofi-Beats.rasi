@@ -1,50 +1,36 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Rofi Beats Config */
+/* Rofi Beats */
 
-@import "~/.config/rofi/config.rasi" 
+@import "~/.config/rofi/config.rasi"
 
-/* ---- Window ---- */
 window {
-  width: inherit;
-  height: inherit;
+  width: 500px;
 }
 
-/* ---- Mainbox ---- */
 mainbox {
-  children:
-    [ "inputbar", "listview"];
+  padding: 12px;
+  spacing: 10px;
+  children: [ "inputbar", "listview"];
 }
 
-/* ---- Entry ---- */ 
+inputbar {
+  margin: 0 120px;
+}
+
 entry {
-  placeholder: "📻 Choose Media or Stations to play";
+  placeholder: "search";
 }
 
-/* ---- Listview ---- */
 listview {
   columns: 2;
   lines: 7;
-  fixed-height: false;
-  margin: 10px;
-  scrollbar: false;
-  spacing: 8px;
-  cycle: true;
+  spacing: 6px;
 }
 
-/* ---- Elements ---- */
 element {
-  orientation: horizontal;
-  padding: 10px 15px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 element-icon {
-  size: 0%;
-}
-
-element-text {
-  horizontal-align: 0.0;
-  vertical-align: 0.5;
-  margin: 0px;
-  padding: 0px;
+  size: 0;
 }

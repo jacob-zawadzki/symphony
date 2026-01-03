@@ -1,4 +1,4 @@
-/* Emoji picker - grid layout, emoji only */
+/* Emoji Picker */
 
 @import "~/.config/rofi/config.rasi"
 
@@ -6,23 +6,30 @@ window {
   width: 380px;
 }
 
+mainbox {
+  padding: 12px;
+  spacing: 10px;
+}
+
+inputbar {
+  margin: 0 60px;
+}
+
 entry {
-  placeholder: "Search emoji...";
+  placeholder: "search";
 }
 
 listview {
   columns: 5;
   lines: 5;
-  fixed-height: false;
-  fixed-columns: true;
   spacing: 6px;
   flow: horizontal;
+  fixed-columns: true;
 }
 
 element {
   padding: 10px;
   border-radius: 6px;
-  spacing: 0px;
 }
 
 element-icon {
@@ -33,5 +40,4 @@ element-text {
   font: "CaskaydiaCove Nerd Font Mono 15";
   horizontal-align: 0.5;
   vertical-align: 0.5;
-  expand: true;
 }

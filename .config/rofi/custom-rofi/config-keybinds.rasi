@@ -1,48 +1,40 @@
-/* Keybinds Viewer - Custom Config */
+/* Keybinds Viewer */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
-/* ---- Window ---- */
 window {
-  width: 700px;
-  height: inherit;
+  width: 600px;
 }
 
-/* ---- Mainbox ---- */
 mainbox {
+  padding: 12px;
+  spacing: 10px;
   children: [ "inputbar", "listview" ];
 }
 
-/* ---- Entry ---- */
-entry {
-  width: inherit;
-  placeholder: "🔎 Search keybinds";
+inputbar {
+  margin: 0 150px;
 }
 
-/* ---- Listview ---- */
+entry {
+  placeholder: "search";
+}
+
 listview {
   columns: 1;
   lines: 12;
   fixed-height: true;
   spacing: 4px;
-  cycle: true;
-  scrollbar: false;
 }
 
-/* ---- Elements ---- */
 element {
-  orientation: horizontal;
   padding: 6px 10px;
 }
 
 element-icon {
-  size: 0%;
+  size: 0;
 }
 
 element-text {
-  horizontal-align: 0.0;
-  vertical-align: 0.5;
-  margin: 0px;
-  padding: 0px;
   font: "CaskaydiaCove Nerd Font Mono 11";
 }

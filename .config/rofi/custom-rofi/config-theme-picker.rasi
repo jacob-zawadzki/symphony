@@ -2,76 +2,72 @@
 
 @import "~/.config/rofi/config.rasi"
 
-configuration {
-  show-icons: true;
-}
+configuration { show-icons: true; }
 
 window {
-  width: 70%;
-  height: 340px;
-  location: center;
-  anchor: center;
-  border-radius: 16px;
-  background-color: rgba(20, 20, 20, 0.85);
-  border: 1px solid;
-  border-color: rgba(255, 255, 255, 0.12);
+  width: 660px;
+  height: 460px;
+  border: 0;
+  border-radius: 12px;
+  background-color: #00000099;
 }
 
 mainbox {
-  padding: 24px;
-  background-color: transparent;
-  children: [ "listview" ];
+  padding: 10px;
+  spacing: 8px;
+  children: [ "inputbar", "listview" ];
 }
 
 inputbar {
-  enabled: false;
+  padding: 6px 14px;
+  margin: 0 200px;
+  border: 0;
+  border-radius: 14px;
+  background-color: #ffffff0c;
+  children: [ "entry" ];
+}
+
+entry {
+  placeholder: "search";
+  placeholder-color: #ffffff40;
+  text-color: #ffffffd0;
+  horizontal-align: 0.5;
+  font: "CaskaydiaCove Nerd Font Mono 9";
 }
 
 listview {
-  columns: 5;
-  lines: 1;
-  spacing: 16px;
+  columns: 4;
+  lines: 2;
+  spacing: 6px;
   flow: horizontal;
   fixed-height: true;
-  cycle: true;
-  scrollbar: false;
-  background-color: transparent;
 }
 
 element {
   orientation: vertical;
-  padding: 10px;
-  border-radius: 12px;
-  background-color: transparent;
-  border: 2px solid;
-  border-color: transparent;
+  padding: 6px;
+  border-radius: 6px;
+  background-color: #ffffff0a;
   cursor: pointer;
 }
 
-element selected {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.35);
+element selected.normal {
+  background-color: #ffffff1a;
 }
 
 element-icon {
-  size: 190px;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.25);
-}
-
-element selected element-icon {
-  background-color: rgba(0, 0, 0, 0.15);
+  size: 140px;
+  border-radius: 5px;
+  background-color: #00000020;
 }
 
 element-text {
   horizontal-align: 0.5;
-  padding: 12px 0 2px 0;
-  text-color: rgba(255, 255, 255, 0.55);
-  font: "CaskaydiaCove Nerd Font Mono 11";
-  background-color: transparent;
+  padding: 5px 0 0 0;
+  text-color: #ffffffa0;
+  font: "CaskaydiaCove Nerd Font Mono Bold 9";
 }
 
-element selected element-text {
-  text-color: rgba(255, 255, 255, 0.95);
-  font: "CaskaydiaCove Nerd Font Mono Bold 11";
+element selected.normal element-text {
+  text-color: #ffffffff;
 }

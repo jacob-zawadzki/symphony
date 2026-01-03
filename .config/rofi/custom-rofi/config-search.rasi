@@ -1,28 +1,26 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Rofi Config for Google Search) */
+/* Search */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
-/* ---- Window ---- */
 window {
-	width: 40%;
-	orientation: horizontal;
-	height: inherit;
-    y-offset: 50px;
-    location: north;
-    children: [ "entry", "message" ];
-    border: 2px;
-    border-color: white/25%;
+  width: 500px;
+  location: north;
+  anchor: north;
+  y-offset: 80px;
 }
 
-/* ---- Entry ---- */ 
-entry {
-	expand: true;
-	placeholder: " 🔎 Google Search";
-	horizontal-align: 0.5;
-	padding: 15px;
-	border-radius: inherit;
+mainbox {
+  padding: 0;
+  children: [ "inputbar" ];
 }
-window{
-    background-color: rgba(25, 25, 25, 0.90);
+
+inputbar {
+  padding: 14px 18px;
+  margin: 0;
+  border-radius: 12px;
+}
+
+entry {
+  placeholder: "search the web";
+  horizontal-align: 0.5;
 }

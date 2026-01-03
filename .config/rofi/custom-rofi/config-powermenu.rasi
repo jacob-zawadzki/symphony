@@ -1,37 +1,26 @@
+/* Power Menu */
+
 @import "~/.config/rofi/config.rasi"
 
-/* Main config for power menu - simple text list */
-
-/* ---- Window ---- */
 window {
-  width: 200px;
-  location: center;
-  anchor: center;
+  width: 180px;
 }
 
-/* ---- Mainbox ---- */
 mainbox {
+  padding: 12px;
   children: ["listview"];
-  padding: 15px;
 }
 
-/* ---- Listview ---- */
 listview {
   lines: 4;
-  spacing: 10px;
+  spacing: 6px;
 }
 
-/* ---- Element ---- */
 element {
-  padding: 10px 15px;
-  border-radius: 6px;
-}
-
-element-text {
-  horizontal-align: 0;
-  vertical-align: 0.5;
+  padding: 10px 14px;
+  border-radius: 8px;
 }
 
 element-icon {
-  size: 0px;
+  size: 0;
 }
