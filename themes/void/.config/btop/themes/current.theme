@@ -15,10 +15,10 @@ theme[selected_fg]="#FFFFFF"
 theme[inactive_fg]="#6B578F"
 
 # Box Outlines & Dividers
-theme[cpu_box]="#BB9AF7"
-theme[mem_box]="#BB9AF7"
-theme[net_box]="#BB9AF7"
-theme[proc_box]="#BB9AF7"
+theme[cpu_box]="#8A7AB6"
+theme[mem_box]="#8A7AB6"
+theme[net_box]="#8A7AB6"
+theme[proc_box]="#8A7AB6"
 theme[div_line]="#382952"
 
 # Process Misc
