@@ -18,7 +18,6 @@
     "custom/idle-indicator",
     "network",
     "bluetooth",
-    "custom/logo",
     "backlight",
     "pulseaudio",
     "battery",
@@ -35,7 +34,7 @@
     ]
   },
   "custom/expand": {
-    "format": "",
+    "format": "❮",
     "tooltip": false
   },
   "custom/screenrecording-indicator": {
@@ -49,13 +48,6 @@
     "exec": "~/.config/waybar/scripts/indicator-idle",
     "signal": 9,
     "return-type": "json"
-  },
-  "custom/logo": {
-    "format": "",
-    // "format": "󰎆",  // music note alternate
-    "tooltip": false,
-    "on-click": "~/.config/rofi/scripts/rofibeats",
-    "on-click-right": "kitty -e nvim ~/.config/rofi/scripts/rofibeats"
   },
   "hyprland/workspaces": {
     "on-click": "activate",
