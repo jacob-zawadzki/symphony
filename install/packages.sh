@@ -44,6 +44,7 @@ packages=(
 
 	# Music
 	mpd mpc rmpc cava playerctl mpdscribble
+	spotify-launcher spicetify-cli
 
 	# Network & Bluetooth
 	networkmanager nmgui-bin kdeconnect
@@ -80,7 +81,7 @@ packages=(
 applications=(
 	brave-bin zen-browser-bin firefox chromium
 	obsidian bitwarden code visual-studio-code-bin
-	vesktop-bin discord spotify-launcher spicetify-cli
+	vesktop-bin discord
 	mpv yt-dlp steam lutris gamemode mangohud
 )
 

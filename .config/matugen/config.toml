@@ -76,5 +76,9 @@ output_path = '~/dotfiles/themes/dynamic/.config/vesktop/themes/symphony-discord
 input_path = '~/.config/matugen/templates/obsidian-theme.css'
 output_path = '~/dotfiles/themes/dynamic/.config/obsidian/theme.css'
 
+[templates.spicetify]
+input_path = '~/.config/matugen/templates/spicetify-colors.ini'
+output_path = '~/dotfiles/themes/dynamic/.config/spicetify/Themes/symphony/color.ini'
+
 
 
