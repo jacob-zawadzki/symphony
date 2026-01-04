@@ -24,6 +24,8 @@
 - [x] Yazi 25.x theme format update
 - [x] Improved shadow and decoration settings
 - [x] Theme switcher with preview
+- [x] Spicetify theming
+- [x] Battery notification daemon
 - [ ] README cleanup and compress showcase GIFs
 - [ ] Optimize theme switching performance
 - [ ] Full cleanup pass
@@ -34,11 +36,10 @@
 
 - [ ] SDDM setup
 - [ ] QT theming (kvantum/qt5ct)
-- [ ] Spicetify theming
 - [ ] Neovim cleanup & hot reload
 - [ ] Media conversion scripts
 - [ ] Symphony website
 
 ---
 
-*Last updated: January 3, 2026*
+*Last updated: January 5, 2026*
