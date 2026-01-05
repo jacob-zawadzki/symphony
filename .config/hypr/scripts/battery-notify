@@ -43,6 +43,10 @@ notify() {
     -h string:x-canonical-private-synchronous:battery "$3" "$4"
 }
 
+set_power_profile() {
+  command -v powerprofilesctl &>/dev/null && powerprofilesctl set "$1" 2>/dev/null
+}
+
 play_sound() {
   local sounds=(
     "/usr/share/sounds/freedesktop/stereo/dialog-warning.oga"
@@ -58,7 +62,7 @@ play_sound() {
 
 suspend_with_countdown() {
   local percent="$1"
-  local countdown=30
+  local countdown=10
 
   while ((countdown > 0)); do
     if [[ "$(get_status)" != "Discharging" ]]; then
@@ -86,11 +90,13 @@ check_battery() {
   if [[ -n "$last_status" && "$status" != "$last_status" ]]; then
     if [[ "$last_status" == "Discharging" && "$status" != "Discharging" ]]; then
       notify "low" "$ICON_CHARGING" "Charging" "Charger connected. Battery at ${percent}%."
+      set_power_profile "performance"
       notified_low=false
       notified_critical=false
       notified_full=false
     elif [[ "$status" == "Discharging" && "$last_status" != "Discharging" ]]; then
       notify "low" "$ICON_DISCHARGING" "On Battery" "Charger disconnected. Battery at ${percent}%."
+      set_power_profile "balanced"
     fi
   fi
   last_status="$status"

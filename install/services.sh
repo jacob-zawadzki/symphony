@@ -6,6 +6,15 @@
 
 step "Setting up services"
 
+# ── Power Profile ─────────────────────────────────────────────────────────────
+if command -v powerprofilesctl &>/dev/null; then
+    if ls /sys/class/power_supply/BAT* &>/dev/null; then
+        powerprofilesctl set balanced &>/dev/null && ok "power profile: balanced (laptop)"
+    else
+        powerprofilesctl set performance &>/dev/null && ok "power profile: performance (desktop)"
+    fi
+fi
+
 # ── Bluetooth ──────────────────────────────────────────────────────────────────
 if pkg_installed bluez; then
     sudo systemctl enable --now bluetooth &>/dev/null && ok "bluetooth" || warn "bluetooth failed"

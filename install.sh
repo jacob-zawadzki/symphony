@@ -51,6 +51,10 @@ source "$DOTFILES/install/services.sh"
 echo
 "$DOTFILES/scripts/choose-shell"
 
+# Create first-run marker for theme application after reboot
+mkdir -p ~/.local/state/symphony
+touch ~/.local/state/symphony/first-run.mode
+
 # Install themes (skip logo since we already showed banner)
 SYMPHONY_INSTALLING=1 "$DOTFILES/install/themes/install.sh"
 
