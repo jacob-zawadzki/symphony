@@ -16,7 +16,7 @@ install_if_missing() {
 
 set_shell() {
   install_if_missing "$1"
-  chsh -s "$(command -v "$1")"
+  sudo chsh -s "$(command -v "$1")" "$USER"
   ok "Shell choice: $1"
   echo "Logout and log back in for the change to take effect."
   sleep 2
