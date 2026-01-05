@@ -32,8 +32,10 @@ if [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" && "$SYMPHONY_FULLSCREEN" != "1" ]]; the
             -e "$SCRIPT_DIR/install.sh" "$@" &
         ALACRITTY_PID=$!
         sleep 0.3
-        # Force fullscreen (works on fresh install without rules, harmless on existing)
-        hyprctl dispatch fullscreen 1 >/dev/null 2>&1 || true
+        # Force fullscreen only if not already fullscreen (fresh install without rules)
+        if ! hyprctl activewindow -j 2>/dev/null | grep -q '"fullscreen": 1'; then
+            hyprctl dispatch fullscreen 1 >/dev/null 2>&1 || true
+        fi
         wait $ALACRITTY_PID
         exit 0
     fi
