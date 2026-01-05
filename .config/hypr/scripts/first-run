@@ -1,31 +1,16 @@
 #!/bin/bash
-set -e
 
-MARKER_FILE="$HOME/.local/state/symphony/first-run.mode"
+MARKER="$HOME/.local/state/symphony/first-run.mode"
+[[ ! -f "$MARKER" ]] && exit 0
+rm -f "$MARKER"
 
-# Check if marker file exists
-if [[ ! -f "$MARKER_FILE" ]]; then
-    exit 0
-fi
-
-# Remove the marker file
-rm -f "$MARKER_FILE"
-
-# Wait for Hyprland to fully initialize
+# Wait for Hyprland to initialize
 sleep 2
 
-# Apply default theme (switch creates symlinks + applies everything)
+# Apply default theme
 ~/dotfiles/install/themes/symphony switch sakura
 
-# Show welcome notifications
-notify-send -u critical -i "dialog-information" \
-    "Welcome to Symphony" \
-    "Run 'symphony help' for available commands."
-
-notify-send -u critical -i "applications-other" \
-    "App Launcher" \
-    "Press Super + Space to launch apps"
-
-notify-send -u critical -i "input-keyboard" \
-    "Keybindings" \
-    "Press Super + K to view all keybindings"
+# Welcome notifications
+notify-send -u critical -i dialog-information "Welcome to Symphony" "Run 'symphony help' for available commands."
+notify-send -u critical -i input-keyboard "Keybindings" "Press Super + K to view all keybindings"
+notify-send -u critical -i applications-other "App Launcher" "Press Super + Space to launch apps"
