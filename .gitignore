@@ -11,6 +11,10 @@
 .config/gtk-4.0/colors.css
 .config/gtk-3.0/bookmarks
 .config/gtk-4.0/bookmarks
+
+# Dynamic theme generated files
+themes/dynamic/.config/spicetify/Themes/symphony/color.ini
+
 # Theme wallpaper symlinks (user preference, changes frequently)
 themes/*/wallpaper
 

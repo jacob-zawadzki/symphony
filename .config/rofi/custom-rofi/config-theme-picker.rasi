@@ -1,61 +1,88 @@
-/* Theme Picker */
+/* Theme Picker - Responsive for all displays */
 @import "~/.config/rofi/config.rasi"
-configuration { show-icons: true; }
+
+configuration {
+    show-icons: true;
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+}
+
 window {
-  width: 1000px;
-  height: 300px;
-  border: 0;
-  border-radius: 12px;
-  background-color: #00000099;
+    width: 80%;
+    border: 0;
+    border-radius: 1.2em;
+    padding: 0;
+    background-color: #000000cc;
+    location: center;
+    anchor: center;
 }
+
 mainbox {
-  padding: 10px;
-  spacing: 8px;
-  children: [ "inputbar", "listview" ];
+    padding: 1em 1.5em;
+    spacing: 1em;
+    background-color: transparent;
+    children: [ /* "inputbar", */ "listview" ];
 }
+
 inputbar {
-  padding: 6px 14px;
-  margin: 0 350px;
-  border: 0;
-  border-radius: 14px;
-  background-color: #ffffff0c;
-  children: [ "entry" ];
+    padding: 0.6em 1em;
+    margin: 0 30%;
+    border: 0;
+    border-radius: 0.6em;
+    background-color: #ffffff10;
+    children: [ "entry" ];
 }
+
 entry {
-  placeholder: "search";
-  placeholder-color: #ffffff40;
-  text-color: #ffffffd0;
-  horizontal-align: 0.5;
-  font: "CaskaydiaCove Nerd Font Mono 9";
+    placeholder: "Search themes...";
+    placeholder-color: #ffffff50;
+    text-color: #ffffffdd;
+    horizontal-align: 0.5;
+    cursor: text;
 }
+
 listview {
-  columns: 5;
-  lines: 1;
-  spacing: 6px;
-  flow: horizontal;
-  fixed-height: true;
+    columns: 5;
+    lines: 1;
+    spacing: 1em;
+    padding: 0;
+    flow: horizontal;
+    fixed-height: true;
+    fixed-columns: true;
+    background-color: transparent;
+    scrollbar: false;
 }
+
 element {
-  orientation: vertical;
-  padding: 6px;
-  border-radius: 6px;
-  background-color: transparent;
-  cursor: pointer;
+    orientation: vertical;
+    padding: 0.5em;
+    spacing: 0.4em;
+    border-radius: 0.6em;
+    background-color: transparent;
+    cursor: pointer;
 }
+
 element selected.normal {
-  background-color: #ffffff1a;
+    background-color: #ffffff18;
 }
+
 element-icon {
-  size: 170px;
-  border-radius: 5px;
-  background-color: transparent;
+    size: 14em;
+    border-radius: 0.6em;
+    background-color: transparent;
+    cursor: inherit;
 }
+
 element-text {
-  horizontal-align: 0.5;
-  padding: 5px 0 0 0;
-  text-color: #ffffffa0;
-  font: "CaskaydiaCove Nerd Font Mono Bold 9";
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    padding: 0.3em 0 0 0;
+    text-color: #ffffffa0;
+    background-color: transparent;
+    cursor: inherit;
 }
+
 element selected.normal element-text {
-  text-color: #ffffffff;
+    text-color: #ffffff;
 }
