@@ -24,8 +24,8 @@ source "$DOTFILES/install/utils.sh"
 if [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" && "$SYMPHONY_FULLSCREEN" != "1" ]]; then
     export SYMPHONY_FULLSCREEN=1
     if command -v alacritty &>/dev/null; then
-        # Launch alacritty with inline config
-        alacritty --class SymphonyInstaller \
+        # Launch alacritty with inline config (use Screensaver class for existing window rules)
+        alacritty --class Screensaver \
             -o 'font.size=10' \
             -o 'window.opacity=1.0' \
             -o 'colors.primary.background="0x000000"' \
