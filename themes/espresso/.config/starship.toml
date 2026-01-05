@@ -50,8 +50,8 @@ style = "fg:color8 bold"
 disabled = false
 
 [os.symbols]
-Linux = "󰣇 "
-Arch = "󰊠"
+Linux = "󰊠"
+Arch = "󰣇"
 Ubuntu = "󰕈"
 
 [line_break]
