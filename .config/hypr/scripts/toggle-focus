@@ -16,7 +16,7 @@ if [[ $gaps == "0" ]]; then
 	restart-app waybar
 
 	rm -f "$STATE_FILE"
-	notify-send "🌊 Vibe Mode" "Animations and gaps enabled"
+	notify-send "Vibe Mode"
 else
 	# Switch to Focus Mode
 	hyprctl keyword "workspace $workspace_id, gapsout:0, gapsin:0, bordersize:1"
@@ -28,5 +28,5 @@ else
 	pkill waybar
 
 	touch "$STATE_FILE"
-	notify-send "🎯 Focus Mode" "Distractions minimized"
+	notify-send "Focus Mode"
 fi

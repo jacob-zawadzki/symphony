@@ -5,7 +5,7 @@ WALLDIR="$HOME/dotfiles/themes/$THEME/backgrounds"
 
 [ ! -d "$WALLDIR" ] && exit 1
 
-WALLS=($(cd "$WALLDIR" && ls *.{jpg,png,jpeg} 2>/dev/null | sort))
+WALLS=($(cd "$WALLDIR" && ls *.{jpg,png,jpeg} 2>/dev/null | sort -V))
 TOTAL=${#WALLS[@]}
 [ $TOTAL -eq 0 ] && exit 1
 
@@ -33,4 +33,4 @@ swww img "$WALLPAPER" \
 # Update wallpaper symlink to track current wallpaper
 ln -sf "$WALLPAPER" "$HOME/dotfiles/themes/$THEME/wallpaper"
 
-notify-send -i "$WALLPAPER" "$(($INDEX + 1))/$TOTAL" "${WALLS[$INDEX]}"
+notify-send -i "$WALLPAPER" "Wallpaper" "$(($INDEX + 1))/$TOTAL"

@@ -3,7 +3,7 @@
 # Check if custom theme is active
 CURRENT_THEME=$(cat ~/.config/symphony/.current-theme 2>/dev/null || echo "dynamic")
 if [[ "$CURRENT_THEME" != "dynamic" ]]; then
-	notify-send "Theme Locked" "Using custom theme: $CURRENT_THEME\\nSwitch to Dynamic to use this"
+	notify-send "Theme Locked" "Switch to Dynamic first"
 	exit 0
 fi
 
@@ -64,4 +64,4 @@ pgrep -x nautilus >/dev/null && (
 	disown
 )
 
-notify-send -i "$CURRENT_WALLPAPER" "Theme changed" "Wallpaper has been updated."
+notify-send -i "$CURRENT_WALLPAPER" "Dynamic" "Colors from wallpaper"

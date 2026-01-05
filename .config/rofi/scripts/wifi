@@ -1,7 +1,7 @@
 #!/bin/bash
 # wifi network selector using rofi and nmcli
 
-notify-send "Scanning Wi-Fi networks..."
+notify-send "Wi-Fi Scanning..."
 
 wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | sed -E "s/WPA*.?\S/ /g" | sed "s/^--/ /g" | sed "s/  //g" | sed "/--/d")
 
@@ -27,14 +27,14 @@ case "$chosen" in
 
 	# check if already saved
 	if nmcli -g NAME connection | grep -qw "$ssid"; then
-		nmcli connection up id "$ssid" && notify-send "Connected" "$ssid"
+		nmcli connection up id "$ssid" && notify-send "Wi-Fi" "Connected to $ssid"
 	else
 		# secured network needs password
 		if [[ "$chosen" =~ "" ]]; then
 			pass=$(rofi -dmenu -p "Password:")
 			[[ -z "$pass" ]] && exit 0
 		fi
-		nmcli device wifi connect "$ssid" password "$pass" && notify-send "Connected" "$ssid"
+		nmcli device wifi connect "$ssid" password "$pass" && notify-send "Wi-Fi" "Connected to $ssid"
 	fi
 	;;
 esac
