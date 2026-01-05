@@ -42,10 +42,10 @@ mainbox {
 }
 
 inputbar {
-    padding: 8px 14px;
-    margin: 0 40px;
+    padding: 10px 14px;
+    margin: 0;
     border: 0;
-    border-radius: 16px;
+    border-radius: 8px;
     background-color: #ffffff0c;
     children: [ "entry" ];
 }
