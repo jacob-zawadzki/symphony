@@ -26,7 +26,8 @@ if [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" && "$SYMPHONY_FULLSCREEN" != "1" && "${S
     if command -v alacritty &>/dev/null; then
         alacritty --class Screensaver \
             -o font.size=12 \
-            -e "$SCRIPT_DIR/install.sh" "$@" && exit 0
+            -e "$SCRIPT_DIR/install.sh" "$@"
+        exit 0
     fi
 fi
 
@@ -51,7 +52,7 @@ CONTENT_WIDTH=55
 PADDING_LEFT=0
 
 init_dimensions() {
-    [[ "$SYMPHONY_FULLSCREEN" == "1" ]] && sleep 0.15
+    sleep 0.15
     TERM_WIDTH=$(tput cols 2>/dev/null || echo 80)
     TERM_HEIGHT=$(tput lines 2>/dev/null || echo 24)
     PADDING_LEFT=$(( (TERM_WIDTH - CONTENT_WIDTH) / 2 ))
