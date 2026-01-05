@@ -26,9 +26,10 @@ FULLSCREEN_MARKER="/tmp/symphony-installer-running"
 if [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" && -z "$SYMPHONY_INSTALLING" && ! -f "$FULLSCREEN_MARKER" ]]; then
     touch "$FULLSCREEN_MARKER"
     if command -v alacritty &>/dev/null; then
-        hyprctl dispatch exec -- alacritty --class Screensaver \
+        hyprctl dispatch exec -- \
+            alacritty --class Screensaver \
             --config-file ~/.config/alacritty/screensaver.toml \
-            -e "$SCRIPT_DIR/install.sh" "$@"
+            -e "$SCRIPT_DIR/install.sh"
         exit 0
     fi
 fi
