@@ -1,32 +1,26 @@
 /* Theme Picker */
-
 @import "~/.config/rofi/config.rasi"
-
 configuration { show-icons: true; }
-
 window {
-  width: 660px;
-  height: 460px;
+  width: 1000px;
+  height: 300px;
   border: 0;
   border-radius: 12px;
   background-color: #00000099;
 }
-
 mainbox {
   padding: 10px;
   spacing: 8px;
   children: [ "inputbar", "listview" ];
 }
-
 inputbar {
   padding: 6px 14px;
-  margin: 0 200px;
+  margin: 0 350px;
   border: 0;
   border-radius: 14px;
   background-color: #ffffff0c;
   children: [ "entry" ];
 }
-
 entry {
   placeholder: "search";
   placeholder-color: #ffffff40;
@@ -34,40 +28,34 @@ entry {
   horizontal-align: 0.5;
   font: "CaskaydiaCove Nerd Font Mono 9";
 }
-
 listview {
-  columns: 4;
-  lines: 2;
+  columns: 5;
+  lines: 1;
   spacing: 6px;
   flow: horizontal;
   fixed-height: true;
 }
-
 element {
   orientation: vertical;
   padding: 6px;
   border-radius: 6px;
-  background-color: #ffffff0a;
+  background-color: transparent;
   cursor: pointer;
 }
-
 element selected.normal {
   background-color: #ffffff1a;
 }
-
 element-icon {
-  size: 140px;
+  size: 170px;
   border-radius: 5px;
-  background-color: #00000020;
+  background-color: transparent;
 }
-
 element-text {
   horizontal-align: 0.5;
   padding: 5px 0 0 0;
   text-color: #ffffffa0;
   font: "CaskaydiaCove Nerd Font Mono Bold 9";
 }
-
 element selected.normal element-text {
   text-color: #ffffffff;
 }
