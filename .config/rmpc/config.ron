@@ -142,13 +142,7 @@
                     (
                         size: "75%",
                         borders: "LEFT",
-                        pane: Split(
-                            direction: Vertical,
-                            panes: [
-                                (size: "90%", pane: Pane(Queue)),
-                                (size: "10%", borders: "TOP", pane: Pane(Cava)),
-                            ],
-                        ),
+                        pane: Pane(Queue),
                     ),
                 ],
             ),
