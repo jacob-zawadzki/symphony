@@ -28,6 +28,7 @@
 - [x] Battery notification daemon
 - [x] Dynamic webapp installer (CDN icons, no bundled files)
 - [x] Fixed first-run script and startup file generation
+- [x] Modularize symphony-import config generators into per-app files
 - [ ] README cleanup and compress showcase GIFs
 - [ ] Optimize theme switching performance
 - [ ] Full cleanup pass
@@ -36,7 +37,6 @@
 
 ## Backlog
 
-- [x] Modularize symphony-import config generators into per-app files
 - [ ] SDDM setup
 - [ ] QT theming (kvantum/qt5ct)
 - [ ] Neovim cleanup & hot reload
