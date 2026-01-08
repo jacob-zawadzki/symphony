@@ -5,6 +5,7 @@
 #General
 alias ls='eza -1 --icons=auto'
 alias l='eza -lh --icons=auto'
+alias zed='zeditor'
 abbr -a c clear
 abbr -a la 'ls -a'
 abbr -a ll 'eza -lha --icons=auto --sort=name --group-directories-first'

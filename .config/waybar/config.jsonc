@@ -197,6 +197,7 @@
   "mpris": {
     "format": "{artist} • {title}",
     "format-paused": "{artist} • {title}",
+    "format-stopped": "",
     "max-length": 55
   }
 }
