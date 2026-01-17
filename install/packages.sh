@@ -71,7 +71,7 @@ packages=(
 	sddm qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects
 
 	# Utilities
-	python-terminaltexteffects gum wget curl unzip localsend deno npm keyd
+	python-terminaltexteffects gum wget curl unzip localsend deno npm keyd tree-sitter-cli
 )
 
 # ╭───────────────────────────────────────────────────────────────────────╮
