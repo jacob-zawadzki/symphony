@@ -82,14 +82,14 @@ window#waybar {
 #mpris,
 #clock,
 #custom-idle-indicator {
-  padding: 5px;
+  padding: 0 6px;
   font-weight: 600;
-  opacity: 1.0;
+  opacity: 1;
   transition: opacity 150ms ease;
 }
 
 #clock {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 #custom-expand {
