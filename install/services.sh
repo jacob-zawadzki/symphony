@@ -42,6 +42,7 @@ if pkg_installed mpd; then
 	echo -e "[Service]\nRuntimeDirectory=mpd" >~/.config/systemd/user/mpd.service.d/override.conf
 	systemctl --user daemon-reload
 	systemctl --user enable --now mpd && ok "mpd" || warn "mpd failed"
+    systemctl --user --now enable mpd-mpris
 fi
 
 # ── mpdscribble ───────────────────────────────────────────────────────────────

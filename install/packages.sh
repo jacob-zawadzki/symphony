@@ -44,7 +44,7 @@ packages=(
 
 	# Music
 	mpd mpc rmpc cava playerctl mpdscribble
-	spotify-launcher spicetify-cli
+	spotify-launcher spicetify-cli mpd-mpris
 
 	# Network & Bluetooth
 	networkmanager nmgui-bin kdeconnect
