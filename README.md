@@ -14,9 +14,7 @@
 
 ## Showcase
 
-<div align="center">
-https://github.com/user-attachments/assets/c8d3894a-8b45-4536-8a32-c84fac883821
-</div>
+ https://github.com/user-attachments/assets/8f59ff8d-90ab-4a0c-a2d6-9346307f5de1
 
 ---
 
