@@ -73,6 +73,8 @@ Include = /etc/pacman.d/mirrorlist
 Include = /etc/pacman.d/mirrorlist
 PACMAN_EOF
 
+sudo pacman -Sy
+
 packages=(
 	base-devel git git-lfs
 	hyprland hypridle hyprlock hyprpicker hyprsunset
