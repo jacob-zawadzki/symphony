@@ -145,7 +145,7 @@ hl.window_rule({
 	},
   float = true,
   center = true,
-  opacity = "1 overrride 1 override",
+  opacity = "1 override 1 override",
 	size = "460 800",
 })
 
@@ -156,7 +156,7 @@ hl.window_rule({
 	},
   float = true,
   center = true,
-  opacity = "1 overrride 1 override",
+  opacity = "1 override 1 override",
 	size = "1063 798",
 })
 
