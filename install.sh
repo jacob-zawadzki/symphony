@@ -52,10 +52,22 @@ source "$SYMPHONY_DIR/install/desktop-entries.sh"
 # Enable user services
 source "$SYMPHONY_DIR/install/services.sh"
 
-# Set fish as default shell
-if command -v fish &>/dev/null; then
-    sudo chsh -s "$(command -v fish)" "$USER" && ok "Shell set to fish" || warn "Failed to set shell"
-fi
+# Choose login shell
+shells=(
+  fish
+  zsh
+  )
+
+
+choose_shell() {
+  selected=$(printf '%s\n' "${shells[@]}" | gum choose --header "Select a shell:") || return 0
+  [[ -z "$selected" ]] && return 0
+
+  sudo chsh -s "$(command -v "$selected")" "$USER" && ok "shell set to $selected" || warn "failed to set shell"
+}
+
+
+choose_shell
 
 # Note: first-run markers are preserved to prevent double theme install
 # The theme installer will run once on first Hyprland login
