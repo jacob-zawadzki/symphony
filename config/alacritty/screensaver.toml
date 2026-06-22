@@ -8,5 +8,16 @@ cursor = "#ffffff"
 [font]
 size = 18.0
 
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
 [window]
 opacity = 1.0
